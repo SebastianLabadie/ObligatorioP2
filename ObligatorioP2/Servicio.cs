@@ -3,19 +3,29 @@ using System.Collections.Generic;
 
 namespace ObligatorioP2
 {
-    public class Servicio
+    public abstract class Servicio
     {
-        public DateTime fecha { get; set; }
+        public static int UltimoId;
 
-        public List<Plato> platos = new List<Plato>();
+        public int Id { get; set; }
 
-        public Servicio()
-        {
-        }
+        public DateTime Fecha { get; set; }
+
+        private List<Plato> platos = new List<Plato>();
+
 
         public Servicio(DateTime pFecha)
         {
-            this.fecha = pFecha;
+            this.Id = UltimoId;
+            UltimoId++;
+            this.Fecha = pFecha;
+        }
+
+        public Servicio()
+        {
+            this.Id = UltimoId;
+            UltimoId++;
+            this.Fecha = DateTime.Now;
         }
 
         public void agregarPlato(Plato unPlato)
@@ -31,7 +41,7 @@ namespace ObligatorioP2
                 platosInfo += p.ToString()+", ";
             }
 
-            return "fecha "+fecha.ToString()+" platos: "+platosInfo;
+            return "fecha "+Fecha.ToString()+" platos: "+platosInfo;
         }
     }
 }

@@ -1,19 +1,22 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Persona
+    public abstract class Persona
     {
-        public int id { get; set; }
+        public static int UltimoId;
 
-        public string nombre { get; set; }
+        public int Id { get; set; }
 
-        public string apellido { get; set; }
+        public string Nombre { get; set; }
 
-        public Persona(int pId, string pNombre, string pApellido)
+        public string Apellido { get; set; }
+
+        public Persona(string pNombre, string pApellido)
         {
-            this.id = pId;
-            this.nombre = pNombre;
-            this.apellido = pApellido;
+            this.Id = UltimoId;
+            UltimoId++;
+            this.Nombre = pNombre;
+            this.Apellido = pApellido;
         }
 
         public Persona()

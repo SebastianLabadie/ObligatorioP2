@@ -3,26 +3,28 @@ namespace ObligatorioP2
 {
     public class Plato
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
-        public int precio { get; set; }
-        public static int precioMinimo;
+        public static int UltimoId;
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public int Precio { get; set; }
+        public static double precioMinimo;
 
         public Plato()
         {
             
         }
 
-        public Plato(int pId,string pNombre,int pPrecio)
+        public Plato(string pNombre,int pPrecio)
         {
-            this.id = pId;
-            this.nombre = pNombre;
-            this.precio = pPrecio;
+            this.Id = UltimoId;
+            UltimoId++;
+            this.Nombre = pNombre;
+            this.Precio = pPrecio;
         }
 
         public override string ToString()
         {
-            return "id: " + id.ToString() + " nombre: " + nombre + " precio: " + precio.ToString();
+            return "id: " + Id.ToString() + " nombre: " + Nombre + " precio: " + Precio.ToString();
         }
 
     }
