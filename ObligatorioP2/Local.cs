@@ -9,13 +9,12 @@ namespace ObligatorioP2
         public Mozo Mozo { get; set; }
 
 
-        public Local()
+        public Local(DateTime pFecha,int pNroMesa,int pCantComensales,Mozo pMozo) : base(pFecha)
         {
-        }
-
-        public Local(DateTime pFecha) : base(pFecha)
-        {
-
+       
+            this.NroMesa = pNroMesa;
+            this.CantComensales = pCantComensales;
+            this.Mozo = pMozo;
         }
     }
 }

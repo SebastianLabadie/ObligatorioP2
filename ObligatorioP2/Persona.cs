@@ -19,10 +19,7 @@ namespace ObligatorioP2
             this.Apellido = pApellido;
         }
 
-        public Persona()
-        {
-
-        }
+       
 
         public static bool ValidarNombre()
         {

@@ -6,20 +6,59 @@ namespace ObligatorioP2
     {
         static void Main(string[] args)
         {
-            Mozo m1 = new Mozo(1,1,"Mozo1","Mozo1");
-            Mozo m2 = new Mozo(2, 2, "Mozo2", "Mozo2");
-            Mozo m3 = new Mozo(3, 3, "Mozo3", "Mozo3");
 
-            Console.WriteLine("MOZOS \n");
-            Console.WriteLine(m1.ToString());
-            Console.WriteLine(m2.ToString());
-            Console.WriteLine(m3.ToString());
+            Sistema sis = new Sistema();
 
-           // Plato p1 = new Plato(1, "Plato1", 123);
-            //Plato p2 = new Plato(2, "Plato2", 123);
-            //Plato p3 = new Plato(3, "Plato3", 123);
+            int op = -1;
 
-          
+            while (op !=0)
+            {
+                Console.WriteLine("1-Listar Todos los Platos");
+                Console.WriteLine("2-Listado de Clientes Ordenado por Apellido / Nombre");
+                Console.WriteLine("3-Listado de los servicios entregados por un repartidor en un rango de fechas dado");
+                Console.WriteLine("4-Modificar el valor del precio mínimo del plato");
+                Console.WriteLine("5-Alta de Mozo");
+                Console.WriteLine("0-Salir");
+
+                op = Int32.Parse(Console.ReadLine());
+
+
+                switch (op)
+                {
+                    case 1:
+                        Console.WriteLine("el 1");
+                        break;
+
+                    case 2:
+                        Console.WriteLine("EL 2");    
+                        break;
+
+                    case 3:
+                        Console.WriteLine("EL 3");
+                        break;
+
+                    case 4:
+                        Console.WriteLine("EL 4");
+                        break;
+
+                    case 5:
+                        Console.WriteLine("EL 5");
+                        break;
+                    case 0:
+                        Console.WriteLine("EL 0");
+                        break;
+
+                    default:
+                        Console.WriteLine("INGRESE UNA OPCION CORRECTA.");
+                        break;
+
+                }
+
+            }
+
+           
+
+
         }
     }
 }

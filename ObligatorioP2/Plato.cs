@@ -9,10 +9,7 @@ namespace ObligatorioP2
         public int Precio { get; set; }
         public static double precioMinimo;
 
-        public Plato()
-        {
-            
-        }
+        
 
         public Plato(string pNombre,int pPrecio)
         {

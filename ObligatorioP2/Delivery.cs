@@ -5,15 +5,14 @@ namespace ObligatorioP2
     {
         public string DireccionEnvio { get; set; }
         public double DistanciaARestaurante { get; set; }
-        //public Repartidor Repartidor { get; set; }
+        public Repartidor Repartidor { get; set; }
 
-        public Delivery()
+    
+        public Delivery(DateTime pFecha,string pDirEnvio,double pDisRestaurante,Repartidor pRepartidor) : base(pFecha)
         {
-        }
-
-        public Delivery(DateTime pFecha) : base(pFecha)
-        {
-
+            this.DireccionEnvio = pDirEnvio;
+            this.DistanciaARestaurante = pDisRestaurante;
+            this.Repartidor = pRepartidor;
         }
     }
 }

@@ -6,12 +6,12 @@ namespace ObligatorioP2
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public Cliente()
+       
+        public Cliente(string pEmail,string pPassword,string pNombre, string pApellido) : base(pNombre, pApellido)
         {
-        }
+            this.Email = pEmail;
+            this.Password = pPassword;
 
-        public Cliente(int pId, string pNombre, string pApellido) : base(pId, pNombre, pApellido)
-        {
 
         }
     }

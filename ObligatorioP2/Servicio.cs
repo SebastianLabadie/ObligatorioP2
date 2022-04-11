@@ -21,12 +21,7 @@ namespace ObligatorioP2
             this.Fecha = pFecha;
         }
 
-        public Servicio()
-        {
-            this.Id = UltimoId;
-            UltimoId++;
-            this.Fecha = DateTime.Now;
-        }
+    
 
         public void agregarPlato(Plato unPlato)
         {

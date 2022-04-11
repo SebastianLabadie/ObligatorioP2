@@ -5,14 +5,11 @@ namespace ObligatorioP2
     {
         public int NroFuncionario { get; set; }
 
-        public Mozo()
-        {
-
-        }
-
-        public Mozo(int pNroFuncionario, int pId,string pNombre,string pApellido) : base(pId,pNombre,pApellido)
+      
+        public Mozo(int pNroFuncionario,string pNombre,string pApellido) : base(pNombre,pApellido)
         {
             this.NroFuncionario = pNroFuncionario;
+            
         }
 
         public override string ToString()

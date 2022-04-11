@@ -5,12 +5,10 @@ namespace ObligatorioP2
     {
        public TipoVehiculo TipoVehiculo { get; set; }
 
-        public Repartidor()
+    
+        public Repartidor(TipoVehiculo pTpoVehiculo,string pNombre, string pApellido) : base(pNombre, pApellido)
         {
-        }
-
-        public Repartidor(int pId, string pNombre, string pApellido) : base(pId, pNombre, pApellido)
-        {
+            this.TipoVehiculo = pTpoVehiculo;
 
         }
     }

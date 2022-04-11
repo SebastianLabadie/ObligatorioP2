@@ -15,6 +15,7 @@ namespace ObligatorioP2
         public Sistema()
         {
             Precaga();
+            
         }
 
         private void Precaga()
@@ -22,39 +23,39 @@ namespace ObligatorioP2
 
         }
 
-        public Delivery AltaDelivery()
+        public Delivery AltaDelivery(DateTime pFch,string pDirEnvio, double pDisRestaurante, Repartidor pRepartidor)
         {
-            Delivery nuevo = new Delivery();
+            Delivery nuevo = new Delivery(pFch, pDirEnvio, pDisRestaurante, pRepartidor);
             return nuevo;
         }
 
-        public Local AltaLocal()
+        public Local AltaLocal(DateTime pFecha, int pNroMesa, int pCantComensales, Mozo pMozo)
         {
-            Local nuevo = new Local();
+            Local nuevo = new Local(pFecha, pNroMesa, pCantComensales,pMozo);
             return nuevo;
         }
 
-        public Mozo AltaMozo()
+        public Mozo AltaMozo(int pNroFuncionario, string pNombre, string pApellido)
         {
-            Mozo nuevo = new Mozo();
+            Mozo nuevo = new Mozo(pNroFuncionario,pNombre,pApellido);
             return nuevo;
         }
 
-        public Repartidor AltaRepartidor()
+        public Repartidor AltaRepartidor(TipoVehiculo pTpoVehiculo, string pNombre, string pApellido)
         {
-            Repartidor nuevo = new Repartidor();
+            Repartidor nuevo = new Repartidor(pTpoVehiculo,pNombre,pApellido);
             return nuevo;
         }
 
-        public Plato AltaPlato()
+        public Plato AltaPlato(string pNombre, int pPrecio)
         {
-            Plato nuevo = new Plato();
+            Plato nuevo = new Plato(pNombre,pPrecio);
             return nuevo;
         }
 
-        public Cliente AltaCliente()
+        public Cliente AltaCliente(string pEmail, string pPassword, string pNombre, string pApellido)
         {
-            Cliente nuevo = new Cliente();
+            Cliente nuevo = new Cliente(pEmail,pPassword,pNombre,pApellido);
             return nuevo;
         }
 

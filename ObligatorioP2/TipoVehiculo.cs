@@ -7,9 +7,7 @@ namespace ObligatorioP2
         public int Id { get; set; }
         public string Nombre { get; set; }
 
-        public TipoVehiculo()
-        {
-        }
+       
 
         public TipoVehiculo(string pNombre)
         {
