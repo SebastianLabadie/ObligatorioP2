@@ -31,6 +31,9 @@ namespace ObligatorioP2
             return true;
         }
 
-
+        public override string ToString()
+        {
+            return "Id: " + this.Id.ToString() + " Nombre: " + this.Nombre + " Apellido: " + this.Apellido;
+        }
     }
 }

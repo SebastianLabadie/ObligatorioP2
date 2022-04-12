@@ -98,12 +98,12 @@ namespace ObligatorioP2
         {
             Console.WriteLine("Lista de Servicios: ");
 
-            List<Delivery> filtered = deliverys.FindAll(e => e.Repartidor.Id == pIdRep);
+            List<Delivery> deliveriesFiltered = deliverys.FindAll(e => e.Repartidor.Id == pIdRep);
 
 
-            foreach (Delivery delivery in deliverys)
+            foreach (Delivery delivery in deliveriesFiltered)
             {
-               
+                Console.WriteLine(delivery.ToString());
             }
         }
 
