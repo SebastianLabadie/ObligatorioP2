@@ -42,7 +42,7 @@ namespace ObligatorioP2
                         break;
 
                     case 4:
-                        Console.WriteLine("EL 4");
+                        sis.ModificarPrecioMinimoPlatos();
                         break;
 
                     case 5:

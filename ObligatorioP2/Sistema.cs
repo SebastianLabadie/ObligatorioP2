@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ObligatorioP2
 {
@@ -109,6 +110,32 @@ namespace ObligatorioP2
 
         public void ModificarPrecioMinimoPlatos()
         {
+            Console.WriteLine("Ingrese nuevo precio MINIMO de Platos:");
+
+            string linestr = Console.ReadLine();
+
+            if (Regex.IsMatch(linestr, @"^[0-9]+$"))
+            {
+
+                int line = Int32.Parse(linestr);
+
+                if (line > 0)
+                {
+                    Plato.precioMinimo = line;
+                    Console.WriteLine("El Precio Minimo se actualizo a " + Plato.precioMinimo);
+                }
+                else
+                {
+                    Console.WriteLine("Ingrese un valor mayor a 0");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Ingrese unn valor numerico.");
+            }
+
+            
 
         }
 
