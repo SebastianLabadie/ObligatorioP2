@@ -94,12 +94,20 @@ namespace ObligatorioP2
            
         }
 
-        public void ListarServiciosDeRepartidor()
+        public void ListarServiciosDeRepartidor(int pIdRep)
         {
+            Console.WriteLine("Lista de Servicios: ");
 
+            List<Delivery> filtered = deliverys.FindAll(e => e.Repartidor.Id == pIdRep);
+
+
+            foreach (Delivery delivery in deliverys)
+            {
+               
+            }
         }
 
-        public void modificarPrecioMinimoPlatos()
+        public void ModificarPrecioMinimoPlatos()
         {
 
         }
