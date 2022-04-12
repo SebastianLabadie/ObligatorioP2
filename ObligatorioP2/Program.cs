@@ -38,7 +38,7 @@ namespace ObligatorioP2
                         break;
 
                     case 3:
-                        Console.WriteLine("EL 3");
+                        sis.ListarServiciosDeRepartidor(2);
                         break;
 
                     case 4:

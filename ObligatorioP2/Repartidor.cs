@@ -11,5 +11,10 @@ namespace ObligatorioP2
             this.TipoVehiculo = pTpoVehiculo;
 
         }
+
+        public override string ToString()
+        {
+            return  base.ToString();
+        }
     }
 }
