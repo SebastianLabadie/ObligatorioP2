@@ -21,7 +21,7 @@ namespace ObligatorioP2
 
         public override string ToString()
         {
-            return "id: " + Id.ToString() + " nombre: " + Nombre + " precio: " + Precio.ToString();
+            return "Id: " + Id.ToString() + " Nombre: " + Nombre + " Precio: " + Precio.ToString();
         }
 
     }

@@ -13,6 +13,9 @@ namespace ObligatorioP2
 
             while (op !=0)
             {
+                //tirar esto para metod menu
+
+                Console.WriteLine("\n-------- MENU PRINCIPAL --------");
                 Console.WriteLine("1-Listar Todos los Platos");
                 Console.WriteLine("2-Listado de Clientes Ordenado por Apellido / Nombre");
                 Console.WriteLine("3-Listado de los servicios entregados por un repartidor en un rango de fechas dado");
@@ -22,11 +25,12 @@ namespace ObligatorioP2
 
                 op = Int32.Parse(Console.ReadLine());
 
+                Console.Clear();
 
                 switch (op)
                 {
                     case 1:
-                        Console.WriteLine("el 1");
+                        sis.ListarPlatos();
                         break;
 
                     case 2:
@@ -45,7 +49,7 @@ namespace ObligatorioP2
                         Console.WriteLine("EL 5");
                         break;
                     case 0:
-                        Console.WriteLine("EL 0");
+                        Console.WriteLine("Adios!");
                         break;
 
                     default:
