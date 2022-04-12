@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ObligatorioP2
@@ -36,7 +37,8 @@ namespace ObligatorioP2
             Repartidor r1 = AltaRepartidor(t1,"Repartidor 1","Repartidor 1");
             Delivery d1 = AltaDelivery(DateTime.Now,"Soca 1542",5,r1);
             AltaLocal(DateTime.Now,1,4,m1);
-            
+            Cliente cl = AltaCliente("pepe@gmail.com", "123", "PEPE", "PEPE");
+            Cliente cl1 = AltaCliente("Jose@gmail.com", "123", "PEPE", "ANGEL");
         }
 
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
@@ -92,7 +94,16 @@ namespace ObligatorioP2
 
         public void ListarClientesPorNomApe()
         {
+            List<Cliente> newClientes = clientes.OrderBy(e => e.Apellido + e.Nombre).ToList();
+
+            foreach (Cliente cl in newClientes)
+            {
+                Console.WriteLine(cl.ToString());
+            }
+            //clientes.Sort();
+
            
+
         }
 
         public void ListarServiciosDeRepartidor(int pIdRep)
@@ -138,6 +149,8 @@ namespace ObligatorioP2
             
 
         }
+
+
 
 
     }

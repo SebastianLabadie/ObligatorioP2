@@ -17,7 +17,7 @@ namespace ObligatorioP2
 
         public override string ToString()
         {
-            return "Fecha: " + this.Fecha + " Direccion de Envio: " + this.DireccionEnvio + "Distancia: " + this.DistanciaARestaurante + "KM" + " Repartidor: " + this.Repartidor.ToString();
+            return "Fecha: " + this.Fecha + " Direccion de Envio: " + this.DireccionEnvio + " Distancia: " + this.DistanciaARestaurante + "KM" + " Repartidor: " + this.Repartidor.ToString();
         }
     }
 }

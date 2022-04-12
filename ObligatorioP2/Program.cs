@@ -34,7 +34,7 @@ namespace ObligatorioP2
                         break;
 
                     case 2:
-                        Console.WriteLine("EL 2");    
+                        sis.ListarClientesPorNomApe();    
                         break;
 
                     case 3:
