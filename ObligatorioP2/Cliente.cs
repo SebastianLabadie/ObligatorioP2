@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+
 namespace ObligatorioP2
 {
-    public class Cliente:Persona
+    public class Cliente : Persona, IValidacion
     {
         public string Email { get; set; }
         public string Password { get; set; }
@@ -14,5 +16,21 @@ namespace ObligatorioP2
 
 
         }
+        public bool esValido()
+        {
+            
+            if (Nombre != "" && Apellido != "" && Regex.IsMatch(Password, "[A-Z]+[a-z]+[0-9]") && Password.Length>=6 && Regex.IsMatch(Nombre, "[A-Z]|[a-z]") && Regex.IsMatch(Apellido, "[A-Z]|[a-z]") && Regex.IsMatch(Email, "[@]") && Email.Substring(0,1)!="@" && Email.Substring(Email.Length-1)!="@")
+            {
+                return true;
+
+            }
+            else
+            {
+                
+                return false;
+            }    
+        }
+        
+
     }
 }

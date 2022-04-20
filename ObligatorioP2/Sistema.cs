@@ -13,6 +13,7 @@ namespace ObligatorioP2
         private List<Plato> platos = new List<Plato>();
         private List<Repartidor> repartidores = new List<Repartidor>();
         private List<Mozo> mozos = new List<Mozo>();
+        private List<TipoVehiculo> tipovehiculos = new List<TipoVehiculo>();
 
         public Sistema()
         {
@@ -37,50 +38,127 @@ namespace ObligatorioP2
             Repartidor r1 = AltaRepartidor(t1,"Repartidor 1","Repartidor 1");
             Delivery d1 = AltaDelivery(DateTime.Now,"Soca 1542",5,r1);
             AltaLocal(DateTime.Now,1,4,m1);
-            Cliente cl = AltaCliente("pepe@gmail.com", "123", "PEPE", "PEPE");
-            Cliente cl1 = AltaCliente("Jose@gmail.com", "123", "PEPE", "ANGEL");
+            Cliente cl = AltaCliente("pepe@gmail.com", "Ab123456", "C", "PEPE");
+            Cliente cl1 = AltaCliente("Jose@gmail.com", "Aa123456", "B", "ANGEL");
+            Cliente cl3 = AltaCliente("Jose@gmail.com", "Aa123456", "A", "ANGEL");
         }
 
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
         {
             Delivery nuevo = new Delivery(pFecha, pDireccionEnvio, pDistanciaRestaurante, pRepartidor);
-            deliverys.Add(nuevo);
-            return nuevo;
+            if (nuevo.esValido())
+            {
+                deliverys.Add(nuevo);
+                return nuevo;
+            }
+            else
+            {
+                return null;
+            }
+                
+            
         }
 
         public Local AltaLocal(DateTime pFecha, int pNroMesa, int pCantComensales, Mozo pMozo)
         {
+
             Local nuevo = new Local(pFecha, pNroMesa, pCantComensales,pMozo);
-            locales.Add(nuevo);
-            return nuevo;
+            if (nuevo.esValido())
+            {
+                locales.Add(nuevo);
+                return nuevo;
+
+            }
+            else
+            {
+                return null;
+            }
+                
+            
         }
 
         public Mozo AltaMozo(int pNroFuncionario, string pNombre, string pApellido)
         {
+
             Mozo nuevo = new Mozo(pNroFuncionario,pNombre,pApellido);
-            mozos.Add(nuevo);
-            return nuevo;
+
+            if (nuevo.esValido())
+            {
+                mozos.Add(nuevo);
+                return nuevo;
+
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public Repartidor AltaRepartidor(TipoVehiculo pTpoVehiculo, string pNombre, string pApellido)
         {
             Repartidor nuevo = new Repartidor(pTpoVehiculo,pNombre,pApellido);
-            repartidores.Add(nuevo);
-            return nuevo;
+            if (nuevo.esValido())
+            {
+                repartidores.Add(nuevo);
+                return nuevo;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Plato AltaPlato(string pNombre, int pPrecio)
         {
             Plato nuevo = new Plato(pNombre,pPrecio);
-            platos.Add(nuevo);
-            return nuevo;
+            if (nuevo.esValido())
+            {
+                platos.Add(nuevo);
+                return nuevo;
+
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Cliente AltaCliente(string pEmail, string pPassword, string pNombre, string pApellido)
         {
+
             Cliente nuevo = new Cliente(pEmail,pPassword,pNombre,pApellido);
-            clientes.Add(nuevo);
-            return nuevo;
+            if (nuevo.esValido())
+            {
+                clientes.Add(nuevo);
+                return nuevo;
+
+            }
+            else
+            {
+                return null;
+            }
+               
+                
+            
+        }
+
+
+        public TipoVehiculo AltaTipoVehiculo(string pNombre)
+        {
+            TipoVehiculo nuevo = new TipoVehiculo(pNombre);
+            if (nuevo.esValido() == true)
+            {
+                tipovehiculos.Add(nuevo);
+                return nuevo;
+
+            }
+            else
+            {
+                return null;
+            }
+                
+
         }
 
         public void ListarPlatos()
@@ -94,15 +172,16 @@ namespace ObligatorioP2
 
         public void ListarClientesPorNomApe()
         {
-            List<Cliente> newClientes = clientes.OrderBy(e => e.Apellido + e.Nombre).ToList();
+            clientes.Sort();
 
-            foreach (Cliente cl in newClientes)
+
+            foreach (Cliente cl in clientes)
             {
                 Console.WriteLine(cl.ToString());
             }
             //clientes.Sort();
 
-           
+
 
         }
 

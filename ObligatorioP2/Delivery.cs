@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Delivery:Servicio
+    public class Delivery:Servicio,IValidacion
     {
         public string DireccionEnvio { get; set; }
         public double DistanciaARestaurante { get; set; }
@@ -18,6 +18,19 @@ namespace ObligatorioP2
         public override string ToString()
         {
             return "Fecha: " + this.Fecha + " Direccion de Envio: " + this.DireccionEnvio + " Distancia: " + this.DistanciaARestaurante + "KM" + " Repartidor: " + this.Repartidor.ToString();
+        }
+
+        public bool esValido()
+        {
+            if (DireccionEnvio != "" && DistanciaARestaurante > 0 && Repartidor != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
         }
     }
 }

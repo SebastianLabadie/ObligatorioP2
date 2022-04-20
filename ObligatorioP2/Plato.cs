@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Plato
+    public class Plato:IValidacion
     {
         public static int UltimoId;
         public int Id { get; set; }
@@ -24,5 +24,16 @@ namespace ObligatorioP2
             return "Id: " + Id.ToString() + " Nombre: " + Nombre + " Precio: " + Precio.ToString();
         }
 
+        public bool esValido()
+        {
+            if (Nombre != "" && Precio > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

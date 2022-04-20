@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Mozo : Persona
+    public class Mozo : Persona,IValidacion
     {
         public int NroFuncionario { get; set; }
 
@@ -15,6 +15,16 @@ namespace ObligatorioP2
         public override string ToString()
         {
             return "nroFuncionario: " +this.NroFuncionario+" id: "+this.Id+" nombre: "+this.Nombre+" apellido: "+this.Apellido;
+        }
+
+        public bool esValido()
+        {
+            if (Nombre != "" && Apellido != "" && NroFuncionario > 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

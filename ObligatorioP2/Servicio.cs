@@ -38,5 +38,7 @@ namespace ObligatorioP2
 
             return "fecha "+Fecha.ToString()+" platos: "+platosInfo;
         }
+
+      
     }
 }

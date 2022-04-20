@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class TipoVehiculo
+    public class TipoVehiculo : IValidacion
     {
         public static int UltimoId;
         public int Id { get; set; }
@@ -14,6 +14,18 @@ namespace ObligatorioP2
             this.Id = UltimoId;
             UltimoId++;
             this.Nombre = pNombre;
+        }
+
+        public bool esValido()
+        {
+            if (Nombre != "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
