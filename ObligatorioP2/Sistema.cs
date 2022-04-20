@@ -34,7 +34,7 @@ namespace ObligatorioP2
             Plato p2 = AltaPlato("Plato 2", 33);
             Plato p3 = AltaPlato("Plato 3", 44);
             Mozo m1 = AltaMozo(123,"Mozo 1","Mozo 1");
-            TipoVehiculo t1 = new TipoVehiculo("Moto");
+            TipoVehiculo t1 = AltaTipoVehiculo("Moto"); ////new TipoVehiculo("Moto");
             Repartidor r1 = AltaRepartidor(t1,"Repartidor 1","Repartidor 1");
             Delivery d1 = AltaDelivery(DateTime.Now,"Soca 1542",5,r1);
             AltaLocal(DateTime.Now,1,4,m1);
