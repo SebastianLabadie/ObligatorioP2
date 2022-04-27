@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Mozo : Persona,IValidacion
+    public class Mozo : Persona
     {
         public int NroFuncionario { get; set; }
 
@@ -17,7 +17,7 @@ namespace ObligatorioP2
             return "nroFuncionario: " +this.NroFuncionario+" id: "+this.Id+" nombre: "+this.Nombre+" apellido: "+this.Apellido;
         }
 
-        public bool esValido()
+        public override bool EsValido()
         {
             if (Nombre != "" && Apellido != "" && NroFuncionario > 0)
             {
@@ -26,5 +26,7 @@ namespace ObligatorioP2
             else
                 return false;
         }
+
+        
     }
 }

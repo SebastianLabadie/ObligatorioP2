@@ -46,7 +46,7 @@ namespace ObligatorioP2
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
         {
             Delivery nuevo = new Delivery(pFecha, pDireccionEnvio, pDistanciaRestaurante, pRepartidor);
-            if (nuevo.esValido())
+            if (nuevo.EsValido())
             {
                 deliverys.Add(nuevo);
                 return nuevo;
@@ -63,7 +63,7 @@ namespace ObligatorioP2
         {
 
             Local nuevo = new Local(pFecha, pNroMesa, pCantComensales,pMozo);
-            if (nuevo.esValido())
+            if (nuevo.EsValido())
             {
                 locales.Add(nuevo);
                 return nuevo;
@@ -82,7 +82,7 @@ namespace ObligatorioP2
 
             Mozo nuevo = new Mozo(pNroFuncionario,pNombre,pApellido);
 
-            if (nuevo.esValido())
+            if (nuevo.EsValido())
             {
                 mozos.Add(nuevo);
                 return nuevo;
@@ -98,7 +98,7 @@ namespace ObligatorioP2
         public Repartidor AltaRepartidor(TipoVehiculo pTpoVehiculo, string pNombre, string pApellido)
         {
             Repartidor nuevo = new Repartidor(pTpoVehiculo,pNombre,pApellido);
-            if (nuevo.esValido())
+            if (nuevo.EsValido())
             {
                 repartidores.Add(nuevo);
                 return nuevo;
@@ -112,7 +112,7 @@ namespace ObligatorioP2
         public Plato AltaPlato(string pNombre, int pPrecio)
         {
             Plato nuevo = new Plato(pNombre,pPrecio);
-            if (nuevo.esValido())
+            if (nuevo.EsValido())
             {
                 platos.Add(nuevo);
                 return nuevo;
@@ -128,7 +128,7 @@ namespace ObligatorioP2
         {
 
             Cliente nuevo = new Cliente(pEmail,pPassword,pNombre,pApellido);
-            if (nuevo.esValido())
+            if (nuevo.EsValido())
             {
                 clientes.Add(nuevo);
                 return nuevo;
@@ -147,7 +147,7 @@ namespace ObligatorioP2
         public TipoVehiculo AltaTipoVehiculo(string pNombre)
         {
             TipoVehiculo nuevo = new TipoVehiculo(pNombre);
-            if (nuevo.esValido() == true)
+            if (nuevo.EsValido() == true)
             {
                 tipovehiculos.Add(nuevo);
                 return nuevo;
@@ -185,17 +185,79 @@ namespace ObligatorioP2
 
         }
 
-        public void ListarServiciosDeRepartidor(int pIdRep)
+        public void ListarServiciosDeRepartidor()
         {
+
+
+            foreach (Mozo P in mozos)
+            {
+                Console.WriteLine("MOZO ES " + P.Id);
+            }
+
+            foreach (Repartidor P in repartidores)
+            {
+                Console.WriteLine("Delivery ES " + P.Id);
+            }
+
+            foreach (Delivery delivery in deliverys)
+            {
+                Console.WriteLine(delivery.Fecha);
+            }
+
+
+            Console.WriteLine("Ingrese Nombre de Repartidor");
+            String NomRep = Console.ReadLine().ToUpper();
+
+            Console.WriteLine("Ingrese Apellido de Repartidor");
+            String ApellidoRep = Console.ReadLine().ToUpper();
+
+            int pIdRep = 0;
+            foreach (Repartidor rep in repartidores)
+            {
+               if (NomRep == rep.Nombre.ToUpper() && ApellidoRep == rep.Apellido.ToUpper())
+                {
+                    pIdRep = rep.Id;
+                }
+            }
+
+            if (pIdRep == 0)
+            {
+                Console.WriteLine("No se encuentran repartidores con el Nombre " + NomRep + " y apellido " + ApellidoRep);
+                return;
+            }
+
+            Console.WriteLine("Ingrese Fecha desde");
+            DateTime pFchDesde = DateTime.Parse(Console.ReadLine());
+
+            Console.WriteLine("FEHCA ES " + pFchDesde);
+
+            Console.WriteLine("Ingrese Fecha hasta");
+            DateTime pFchHasta = DateTime.Parse(Console.ReadLine());
             Console.WriteLine("Lista de Servicios: ");
 
-            List<Delivery> deliveriesFiltered = deliverys.FindAll(e => e.Repartidor.Id == pIdRep);
+            List<Delivery> deliveriesFiltered = new List<Delivery>();
 
 
-            foreach (Delivery delivery in deliveriesFiltered)
+            foreach (Delivery delivery in deliverys)
             {
-                Console.WriteLine(delivery.ToString());
+                if (delivery.Repartidor.Id == pIdRep && delivery.Fecha >= pFchDesde && delivery.Fecha <= pFchHasta)
+                {
+                    deliveriesFiltered.Add(delivery);
+                }
             }
+
+            if (deliveriesFiltered.Count == 0)
+            {
+                Console.WriteLine("No hay registros.");
+            }
+            else
+            {
+                foreach (Delivery delivery in deliveriesFiltered)
+                {
+                   Console.WriteLine(delivery.ToString());
+                }
+            }
+
         }
 
         public void ModificarPrecioMinimoPlatos()

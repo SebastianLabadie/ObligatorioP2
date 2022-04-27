@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Repartidor:Persona,IValidacion
+    public class Repartidor : Persona
     {
        public TipoVehiculo TipoVehiculo { get; set; }
 
@@ -17,7 +17,7 @@ namespace ObligatorioP2
             return  base.ToString();
         }
 
-        public bool esValido()
+        public override bool EsValido()
         {
             if (Nombre != "" && Apellido != "" && TipoVehiculo != null)
             {

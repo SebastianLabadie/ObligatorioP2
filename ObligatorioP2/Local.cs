@@ -17,7 +17,7 @@ namespace ObligatorioP2
             this.Mozo = pMozo;
         }
 
-        public bool esValido()
+        public bool EsValido()
         {
             if (NroMesa > 0 && CantComensales > 0 && Mozo != null)
             {

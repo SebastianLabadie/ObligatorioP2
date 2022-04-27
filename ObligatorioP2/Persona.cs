@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace ObligatorioP2
 {
-    public abstract class Persona : IComparable<Persona>
+    public abstract class Persona : IComparable<Persona>,IValidacion
     {
         public static int UltimoId;
 
@@ -73,6 +73,7 @@ namespace ObligatorioP2
             }
         }
 
-      
+        public abstract bool EsValido();
+    
     }
 }

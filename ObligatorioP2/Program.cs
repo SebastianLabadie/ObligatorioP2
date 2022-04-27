@@ -38,7 +38,7 @@ namespace ObligatorioP2
                         break;
 
                     case 3:
-                        sis.ListarServiciosDeRepartidor(2);
+                        sis.ListarServiciosDeRepartidor();
                         break;
 
                     case 4:

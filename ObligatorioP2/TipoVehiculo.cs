@@ -16,7 +16,7 @@ namespace ObligatorioP2
             this.Nombre = pNombre;
         }
 
-        public bool esValido()
+        public bool EsValido()
         {
             if (Nombre != "")
             {

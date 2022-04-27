@@ -24,7 +24,7 @@ namespace ObligatorioP2
             return "Id: " + Id.ToString() + " Nombre: " + Nombre + " Precio: " + Precio.ToString();
         }
 
-        public bool esValido()
+        public bool EsValido()
         {
             if (Nombre != "" && Precio > 0)
             {

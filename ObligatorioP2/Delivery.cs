@@ -20,7 +20,7 @@ namespace ObligatorioP2
             return "Fecha: " + this.Fecha + " Direccion de Envio: " + this.DireccionEnvio + " Distancia: " + this.DistanciaARestaurante + "KM" + " Repartidor: " + this.Repartidor.ToString();
         }
 
-        public bool esValido()
+        public bool EsValido()
         {
             if (DireccionEnvio != "" && DistanciaARestaurante > 0 && Repartidor != null)
             {
