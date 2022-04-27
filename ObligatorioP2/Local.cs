@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Local: Servicio,IValidacion
+    public class Local: Servicio
     {
         public int NroMesa { get; set; }
         public int CantComensales { get; set; }
@@ -17,7 +17,7 @@ namespace ObligatorioP2
             this.Mozo = pMozo;
         }
 
-        public bool EsValido()
+        public override bool EsValido()
         {
             if (NroMesa > 0 && CantComensales > 0 && Mozo != null)
             {

@@ -29,18 +29,52 @@ namespace ObligatorioP2
             Persona.UltimoId = 1;
             Plato.precioMinimo = 123;
             Local.PrecioCubierto = 123;
+            TipoVehiculo t1 = AltaTipoVehiculo("Moto");
+            TipoVehiculo t2 = AltaTipoVehiculo("Auto");
+            TipoVehiculo t3 = AltaTipoVehiculo("Camion");
+            Cliente cl = AltaCliente("pepe@gmail.com", "Ab123456", "PEPE", "PEPE");
+            Cliente cl1 = AltaCliente("Jose@gmail.com", "Aa123456", "JOSE", "JOSE");
+            Cliente cl3 = AltaCliente("raul@gmail.com", "Aa123456", "RAUL", "RAUL");
+            Cliente cl4 = AltaCliente("jorge@gmail.com", "Aa123456", "JORGE", "JORGE");
+            Cliente cl5 = AltaCliente("marcelo@gmail.com", "Aa123456", "MARCELO", "MARCELO");
+            for (int i = 1; i<=10; i++)
+            {
+                Plato p1 = AltaPlato($"Plato {i}", 20+i);
+                
+                Mozo m1 = AltaMozo(120+i, $"Mozo {i}"+i, $"Mozo {i}");
+                AltaLocal(DateTime.Now, 1, 4, m1);
+                
 
-            Plato p1 = AltaPlato("Plato 1",22);
-            Plato p2 = AltaPlato("Plato 2", 33);
-            Plato p3 = AltaPlato("Plato 3", 44);
-            Mozo m1 = AltaMozo(123,"Mozo 1","Mozo 1");
-            TipoVehiculo t1 = AltaTipoVehiculo("Moto"); ////new TipoVehiculo("Moto");
-            Repartidor r1 = AltaRepartidor(t1,"Repartidor 1","Repartidor 1");
-            Delivery d1 = AltaDelivery(DateTime.Now,"Soca 1542",5,r1);
-            AltaLocal(DateTime.Now,1,4,m1);
-            Cliente cl = AltaCliente("pepe@gmail.com", "Ab123456", "C", "PEPE");
-            Cliente cl1 = AltaCliente("Jose@gmail.com", "Aa123456", "B", "ANGEL");
-            Cliente cl3 = AltaCliente("Jose@gmail.com", "Aa123456", "A", "ANGEL");
+
+                if (i < 3)
+                {
+
+                    Repartidor r1 = AltaRepartidor(t1, $"Repartidor {i}", $"Repartidor {i}");
+                    Delivery d1 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r1);
+                }
+                      
+                        
+                        
+                if(i< 7)
+                {
+                    Repartidor r2 = AltaRepartidor(t2, $"Repartidor {i}", $"Repartidor {i}");
+                    Delivery d2 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r2);
+                }
+
+
+
+                if (i >= 7)
+                {
+                    Repartidor r3 = AltaRepartidor(t3, $"Repartidor {i}", $"Repartidor {i}");
+                    Delivery d3 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r3);
+                }
+                    
+                    
+                }
+                
+            
+
+            
         }
 
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
@@ -189,21 +223,7 @@ namespace ObligatorioP2
         {
 
 
-            foreach (Mozo P in mozos)
-            {
-                Console.WriteLine("MOZO ES " + P.Id);
-            }
-
-            foreach (Repartidor P in repartidores)
-            {
-                Console.WriteLine("Delivery ES " + P.Id);
-            }
-
-            foreach (Delivery delivery in deliverys)
-            {
-                Console.WriteLine(delivery.Fecha);
-            }
-
+           
 
             Console.WriteLine("Ingrese Nombre de Repartidor");
             String NomRep = Console.ReadLine().ToUpper();
@@ -290,6 +310,8 @@ namespace ObligatorioP2
             
 
         }
+
+
 
 
 

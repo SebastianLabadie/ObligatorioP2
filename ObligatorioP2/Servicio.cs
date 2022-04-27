@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ObligatorioP2
 {
-    public abstract class Servicio
+    public abstract class Servicio:IValidacion
     {
         public static int UltimoId;
 
@@ -39,6 +39,6 @@ namespace ObligatorioP2
             return "fecha "+Fecha.ToString()+" platos: "+platosInfo;
         }
 
-      
+        public abstract bool EsValido();
     }
 }

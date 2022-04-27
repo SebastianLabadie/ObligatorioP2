@@ -25,7 +25,7 @@ namespace ObligatorioP2
 
                 op = Int32.Parse(Console.ReadLine());
 
-                Console.Clear();
+               // Console.Clear();
 
                 switch (op)
                 {
