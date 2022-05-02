@@ -118,7 +118,7 @@ namespace ObligatorioP2
 
             if (nuevo.EsValido())
             {
-                
+               
                 if (!nuevo.VerficiarNroFuncionario(mozos))
                 {
                     mozos.Add(nuevo);
@@ -246,9 +246,6 @@ namespace ObligatorioP2
 
         public void ListarServiciosDeRepartidor()
         {
-
-
-           
 
             Console.WriteLine("Ingrese Nombre de Repartidor");
             String NomRep = Console.ReadLine().ToUpper();
