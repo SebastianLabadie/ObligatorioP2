@@ -329,7 +329,7 @@ namespace ObligatorioP2
             }
             else
             {
-                Console.WriteLine("Ingrese unn valor numerico.");
+                Console.WriteLine("Ingrese un valor numerico.");
             }
 
             
