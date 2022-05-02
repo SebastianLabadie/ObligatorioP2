@@ -25,7 +25,7 @@ namespace ObligatorioP2
 
                 op = Int32.Parse(Console.ReadLine());
 
-                Console.Clear();
+               // Console.Clear();
 
                 switch (op)
                 {
@@ -46,7 +46,7 @@ namespace ObligatorioP2
                         break;
 
                     case 5:
-                        Console.WriteLine("EL 5");
+                        sis.AltaMozoPorUsuario();
                         break;
                     case 0:
                         Console.WriteLine("Adios!");
