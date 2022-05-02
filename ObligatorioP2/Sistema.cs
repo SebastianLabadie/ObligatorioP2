@@ -71,10 +71,10 @@ namespace ObligatorioP2
                     
                     
                 }
-                
-            
 
             
+
+
         }
 
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
@@ -118,8 +118,17 @@ namespace ObligatorioP2
 
             if (nuevo.EsValido())
             {
-                mozos.Add(nuevo);
-                return nuevo;
+                
+                if (!nuevo.VerficiarNroFuncionario(mozos))
+                {
+                    mozos.Add(nuevo);
+                    return nuevo;
+                }
+                else
+                {
+                    Console.WriteLine("Existe Mozo con Mismo numero de funcionario.");
+                    return null;
+                }
 
             }
             else
@@ -324,6 +333,31 @@ namespace ObligatorioP2
             }
 
             
+
+        }
+
+        public void AltaMozoPorUsuario()
+        {
+            Console.WriteLine("Ingrese Numero de Funcionario");
+            int pNroFuncionario = Int32.Parse(Console.ReadLine());
+
+            Console.WriteLine("Ingrese Nombre de Funcionario");
+            string pNombre = Console.ReadLine();
+
+            Console.WriteLine("Ingrese Apellido de Funcionario");
+            string pApellido = Console.ReadLine();
+
+            Mozo m = AltaMozo(pNroFuncionario,pNombre,pApellido);
+
+            if (m == null)
+            {
+                Console.WriteLine("Mozo no creado.");
+                
+            }
+            else
+            {
+                Console.WriteLine("Mozo " + m.ToString() + " Creado Correctamente.");
+            }
 
         }
 

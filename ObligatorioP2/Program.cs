@@ -46,7 +46,7 @@ namespace ObligatorioP2
                         break;
 
                     case 5:
-                        Console.WriteLine("EL 5");
+                        sis.AltaMozoPorUsuario();
                         break;
                     case 0:
                         Console.WriteLine("Adios!");
