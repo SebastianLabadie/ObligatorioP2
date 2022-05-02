@@ -197,21 +197,37 @@ namespace ObligatorioP2
 
         public void ListarPlatos()
         {
-            Console.WriteLine("Lista de Platos: ");
-            foreach (Plato plato in platos)
+
+            if (platos.Count() > 0)
             {
-                Console.WriteLine(plato.ToString());
+                Console.WriteLine("Lista de Platos: ");
+                foreach (Plato plato in platos)
+                {
+                    Console.WriteLine(plato.ToString());
+                }
+            }
+            else
+            {
+                Console.WriteLine("No se encuentra registro de Platos.");
             }
         }
 
         public void ListarClientesPorNomApe()
         {
-            clientes.Sort();
-
-
-            foreach (Cliente cl in clientes)
+            if (clientes.Count() > 0)
             {
-                Console.WriteLine(cl.ToString());
+
+                clientes.Sort();
+
+
+                foreach (Cliente cl in clientes)
+                {
+                    Console.WriteLine(cl.ToString());
+                }
+            }
+            else
+            {
+                Console.WriteLine("No se encuentra registro de Clientes.");
             }
             //clientes.Sort();
 
