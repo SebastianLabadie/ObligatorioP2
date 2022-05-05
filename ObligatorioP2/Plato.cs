@@ -1,8 +1,10 @@
 ﻿using System;
 namespace ObligatorioP2
 {
-    public class Plato:IValidacion
+    public class Plato:IValidacion //Herencia desde la clase Validacion
     {
+
+        //Propiedades de la clase
         public static int UltimoId;
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -10,7 +12,7 @@ namespace ObligatorioP2
         public static double precioMinimo;
 
         
-
+        //Constructor
         public Plato(string pNombre,int pPrecio)
         {
             this.Id = UltimoId;
@@ -19,6 +21,7 @@ namespace ObligatorioP2
             this.Precio = pPrecio;
         }
 
+        //Procedimiento para traer datos del objeto
         public override string ToString()
         {
             return "Id: " + Id.ToString() + " Nombre: " + Nombre + " Precio: " + Precio.ToString();

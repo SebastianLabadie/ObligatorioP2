@@ -7,6 +7,7 @@ namespace ObligatorioP2
 {
     public class Sistema
     {
+        //Creamos todas las listas
         private List<Cliente> clientes = new List<Cliente>();
         private List<Delivery> deliverys = new List<Delivery>();
         private List<Local> locales = new List<Local>();
@@ -23,7 +24,10 @@ namespace ObligatorioP2
 
         private void Precaga()
         {
-            Servicio.UltimoId = 1;
+            //Realizamos la precarga de datos
+
+           
+            Servicio.UltimoId = 1; 
             Plato.UltimoId = 1;
             TipoVehiculo.UltimoId = 1;
             Persona.UltimoId = 1;
@@ -45,7 +49,7 @@ namespace ObligatorioP2
                 AltaLocal(DateTime.Now, 1, 4, m1);
                 
 
-
+                //Esto se reliza para poder crear distintos Repartidores con diferente nombre.
                 if (i < 3)
                 {
 
@@ -79,10 +83,14 @@ namespace ObligatorioP2
 
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
         {
+
+            //Creamos el objeto nuevo
             Delivery nuevo = new Delivery(pFecha, pDireccionEnvio, pDistanciaRestaurante, pRepartidor);
+
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
             {
-                deliverys.Add(nuevo);
+                deliverys.Add(nuevo); //Se agrega a la lista
                 return nuevo;
             }
             else
@@ -97,6 +105,8 @@ namespace ObligatorioP2
         {
 
             Local nuevo = new Local(pFecha, pNroMesa, pCantComensales,pMozo);
+
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
             {
                 locales.Add(nuevo);
@@ -115,10 +125,11 @@ namespace ObligatorioP2
         {
 
             Mozo nuevo = new Mozo(pNroFuncionario,pNombre,pApellido);
-
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
             {
-               
+
+                //Si el Numero de funcionario no existe en otro Mozo, se agrega
                 if (!nuevo.VerficiarNroFuncionario(mozos))
                 {
                     mozos.Add(nuevo);
@@ -141,6 +152,8 @@ namespace ObligatorioP2
         public Repartidor AltaRepartidor(TipoVehiculo pTpoVehiculo, string pNombre, string pApellido)
         {
             Repartidor nuevo = new Repartidor(pTpoVehiculo,pNombre,pApellido);
+
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
             {
                 repartidores.Add(nuevo);
@@ -155,6 +168,8 @@ namespace ObligatorioP2
         public Plato AltaPlato(string pNombre, int pPrecio)
         {
             Plato nuevo = new Plato(pNombre,pPrecio);
+
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
             {
                 platos.Add(nuevo);
@@ -171,6 +186,8 @@ namespace ObligatorioP2
         {
 
             Cliente nuevo = new Cliente(pEmail,pPassword,pNombre,pApellido);
+
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
             {
                 clientes.Add(nuevo);
@@ -190,6 +207,8 @@ namespace ObligatorioP2
         public TipoVehiculo AltaTipoVehiculo(string pNombre)
         {
             TipoVehiculo nuevo = new TipoVehiculo(pNombre);
+
+            //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido() == true)
             {
                 tipovehiculos.Add(nuevo);
@@ -207,6 +226,7 @@ namespace ObligatorioP2
         public void ListarPlatos()
         {
 
+            //Si existen Objetos de tipo Plato en la lista platos, se van a mostrar en pantalla, sino devuelve mensaje
             if (platos.Count() > 0)
             {
                 Console.WriteLine("Lista de Platos: ");
@@ -223,13 +243,14 @@ namespace ObligatorioP2
 
         public void ListarClientesPorNomApe()
         {
+            //Si existen Objetos de Tipo Cliente en la lista cliente, se va a realizar un Sort y mostrar por pantalla
             if (clientes.Count() > 0)
             {
 
-                clientes.Sort();
+                clientes.Sort(); //Se realiza para ordenar la lista 
 
 
-                foreach (Cliente cl in clientes)
+                foreach (Cliente cl in clientes) //Recorremos la lista de clientes
                 {
                     Console.WriteLine(cl.ToString());
                 }
@@ -246,7 +267,7 @@ namespace ObligatorioP2
 
         public void ListarServiciosDeRepartidor()
         {
-
+            //Se pide ingreso de Datos
             Console.WriteLine("Ingrese Nombre de Repartidor");
             String NomRep = Console.ReadLine().ToUpper();
 
@@ -254,14 +275,17 @@ namespace ObligatorioP2
             String ApellidoRep = Console.ReadLine().ToUpper();
 
             int pIdRep = 0;
+
+            //Con el Nombre y apellido solicitado anteriormente, vamos a buscar el Id del repartidor
             foreach (Repartidor rep in repartidores)
             {
-               if (NomRep == rep.Nombre.ToUpper() && ApellidoRep == rep.Apellido.ToUpper())
+               if (NomRep == rep.Nombre.ToUpper() && ApellidoRep == rep.Apellido.ToUpper()) 
                 {
                     pIdRep = rep.Id;
                 }
             }
 
+            //Si el Id del repartidor es 0 significa que no se encuentra un repartidor
             if (pIdRep == 0)
             {
                 Console.WriteLine("No se encuentran repartidores con el Nombre " + NomRep + " y apellido " + ApellidoRep);
@@ -271,23 +295,25 @@ namespace ObligatorioP2
             Console.WriteLine("Ingrese Fecha desde");
             DateTime pFchDesde = DateTime.Parse(Console.ReadLine());
 
-            Console.WriteLine("FEHCA ES " + pFchDesde);
-
             Console.WriteLine("Ingrese Fecha hasta");
             DateTime pFchHasta = DateTime.Parse(Console.ReadLine());
+
             Console.WriteLine("Lista de Servicios: ");
 
-            List<Delivery> deliveriesFiltered = new List<Delivery>();
+            List<Delivery> deliveriesFiltered = new List<Delivery>(); //Se crea una nueva lista para devolverla ordenadad
 
 
             foreach (Delivery delivery in deliverys)
             {
+                //Si el objeto Delivery coincide con el Id del repartidor y el rango de fechas, se agrega a la nueva lista
+
                 if (delivery.Repartidor.Id == pIdRep && delivery.Fecha >= pFchDesde && delivery.Fecha <= pFchHasta)
                 {
                     deliveriesFiltered.Add(delivery);
                 }
             }
 
+            //En el caso que no coinicidan con el filtro y la lista sea vacia, devuelve mensaje de error
             if (deliveriesFiltered.Count == 0)
             {
                 Console.WriteLine("No hay registros.");
@@ -308,6 +334,7 @@ namespace ObligatorioP2
 
             string linestr = Console.ReadLine();
 
+            //Expresion regular para verificar que el dato ingresado sea numerico
             if (Regex.IsMatch(linestr, @"^[0-9]+$"))
             {
 
@@ -315,7 +342,7 @@ namespace ObligatorioP2
 
                 if (line > 0)
                 {
-                    Plato.precioMinimo = line;
+                    Plato.precioMinimo = line; //Actualizo el precio minimo del Plato
                     Console.WriteLine("El Precio Minimo se actualizo a " + Plato.precioMinimo);
                 }
                 else
@@ -335,6 +362,8 @@ namespace ObligatorioP2
 
         public void AltaMozoPorUsuario()
         {
+
+            //Pido los datos por pantalla
             Console.WriteLine("Ingrese Numero de Funcionario");
             int pNroFuncionario = Int32.Parse(Console.ReadLine());
 
@@ -344,8 +373,10 @@ namespace ObligatorioP2
             Console.WriteLine("Ingrese Apellido de Funcionario");
             string pApellido = Console.ReadLine();
 
+            //Llama al proceso crear Mozo
             Mozo m = AltaMozo(pNroFuncionario,pNombre,pApellido);
 
+            //En el caso que no se cree el mozo devuelve mensaje de error
             if (m == null)
             {
                 Console.WriteLine("Mozo no creado.");
