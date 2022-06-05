@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ObligatorioP2
+namespace Dominio
 {
     public class Mozo : Persona //Hereda de Persona
     {

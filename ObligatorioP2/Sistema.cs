@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ObligatorioP2
+namespace Dominio
 {
     public class Sistema
     {
@@ -15,11 +15,52 @@ namespace ObligatorioP2
         private List<Repartidor> repartidores = new List<Repartidor>();
         private List<Mozo> mozos = new List<Mozo>();
         private List<TipoVehiculo> tipovehiculos = new List<TipoVehiculo>();
+        private List<Usuario> usuarios = new List<Usuario>();
+        private List<Persona> personas = new List<Persona>();
+
+        private static Sistema instancia = null;
 
         public Sistema()
         {
             Precaga();
             
+        }
+
+        public static Sistema GetInstancia()
+        {
+
+            if (instancia == null)
+            {
+                instancia = new Sistema();
+            }
+            return instancia;
+        }
+
+        public Persona ValidarDatosLogin(string user, string pass)
+        {
+            Persona p = null;
+            foreach (Usuario u in usuarios)
+            {
+
+                if (u.Username.Equals(user) && u.Password.Equals(pass) && u.Estado)
+                {
+
+                    p = GetPersona(u.IdPersona);
+                }
+            }
+            return p;
+        }
+
+        public Persona GetPersona(int idPersona)
+        {
+            foreach (Persona p in personas)
+            {
+                if (p.Id.Equals(idPersona))
+                {
+                    return p;
+                }
+            }
+            return null;
         }
 
         private void Precaga()
@@ -133,6 +174,9 @@ namespace ObligatorioP2
                 if (!nuevo.VerficiarNroFuncionario(mozos))
                 {
                     mozos.Add(nuevo);
+                    personas.Add(nuevo);
+                    Usuario u = new Usuario(nuevo.Id, pNombre, pNombre);
+                    usuarios.Add(u);
                     return nuevo;
                 }
                 else
@@ -157,6 +201,9 @@ namespace ObligatorioP2
             if (nuevo.EsValido())
             {
                 repartidores.Add(nuevo);
+                personas.Add(nuevo);
+                Usuario u = new Usuario(nuevo.Id, pNombre, pNombre);
+                usuarios.Add(u);
                 return nuevo;
             }
             else
@@ -191,6 +238,9 @@ namespace ObligatorioP2
             if (nuevo.EsValido())
             {
                 clientes.Add(nuevo);
+                personas.Add(nuevo);
+                Usuario u = new Usuario(nuevo.Id, pNombre, pPassword);
+                usuarios.Add(u);
                 return nuevo;
 
             }

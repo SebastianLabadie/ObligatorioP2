@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ObligatorioP2
+namespace Dominio
 {
     public interface IValidacion
     {

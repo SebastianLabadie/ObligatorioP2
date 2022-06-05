@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace ObligatorioP2
+namespace Dominio
 {
     public abstract class Persona : IComparable<Persona>,IValidacion //Herencia de IComparable para de esta forma poder ordenar las listas y de iValidacion para poder tener la funcion de validar
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ObligatorioP2
+namespace Dominio
 {
     class Program
     {

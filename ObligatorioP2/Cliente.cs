@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ObligatorioP2
+namespace Dominio
 {
     public class Cliente : Persona
     {

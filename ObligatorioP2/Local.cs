@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ObligatorioP2
+namespace Dominio
 {
     public class Local: Servicio //Hereda de la clase Servicio sus atributos y funciones
     {

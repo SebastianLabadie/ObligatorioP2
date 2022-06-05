@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ObligatorioP2
+namespace Dominio
 {
     public class Delivery:Servicio //Esta clase tiene herencia de la clase Servicio, por lo que hereda sus atributos
     {

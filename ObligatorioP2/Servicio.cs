@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ObligatorioP2
+namespace Dominio
 {
     public abstract class Servicio:IValidacion //Se crea la clase abstracta para de esta forma no poder crear un objeto de este tipo en el codigo
     {
