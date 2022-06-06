@@ -26,14 +26,19 @@ namespace WebApplicationRestaurante.Controllers
         {
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
 
-            if (idLogueado != null)
+
+            if (idLogueado != null && idLogueado != 0)
             {
+                ViewBag.LogeadoId = idLogueado;
+                ViewBag.LogeadoRol = HttpContext.Session.GetString("LogueadoRol");
                 string rol = HttpContext.Session.GetString("LogueadoRol");
 
                 ViewBag.msg = $"Bienvenido, usted está logueado su rol es {rol}";
             }
             else
             {
+                ViewBag.LogeadoId = 0;
+                ViewBag.LogeadoRol = null;
                 ViewBag.msg = "Inicie sesión";
             }
 
@@ -57,21 +62,8 @@ namespace WebApplicationRestaurante.Controllers
 
             if (p != null)
             {
-                string rol = "";
-                if (p is Cliente)
-                {
-                    rol = "Cliente";
-                }
-                if (p is Repartidor)
-                {
-                    rol = "Repartidor";
-                }
-                if (p is Mozo)
-                {
-                    rol = "Mozo";
-                }
                 HttpContext.Session.SetInt32("LogueadoId", p.Id);
-                HttpContext.Session.SetString("LogueadoRol", rol);
+                HttpContext.Session.SetString("LogueadoRol", p.GetType().Name);
                 return RedirectToAction("Index");
             }
             else
@@ -81,6 +73,14 @@ namespace WebApplicationRestaurante.Controllers
 
                 return View();
             }
+
+        }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.SetInt32("LogueadoId", 0);
+            HttpContext.Session.SetString("LogueadoRol", "");
+            return  RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
