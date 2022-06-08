@@ -29,16 +29,12 @@ namespace WebApplicationRestaurante.Controllers
 
             if (idLogueado != null && idLogueado != 0)
             {
-                ViewBag.LogeadoId = idLogueado;
-                ViewBag.LogeadoRol = HttpContext.Session.GetString("LogueadoRol");
                 string rol = HttpContext.Session.GetString("LogueadoRol");
 
                 ViewBag.msg = $"Bienvenido, usted está logueado su rol es {rol}";
             }
             else
             {
-                ViewBag.LogeadoId = 0;
-                ViewBag.LogeadoRol = null;
                 ViewBag.msg = "Inicie sesión";
             }
 
@@ -76,10 +72,28 @@ namespace WebApplicationRestaurante.Controllers
 
         }
 
+        public IActionResult Registro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Registro(string Email, string Password, string Nombre, string Apellido)
+        {
+            if (s.AltaCliente(Email, Password, Nombre, Apellido) != null)
+            {
+                ViewBag.msg = "Registro exitoso!";
+            }
+            else
+            {
+                ViewBag.msg = "Registro fallido valide sus datos.";
+            }
+            return View();
+        }
+
         public IActionResult LogOut()
         {
-            HttpContext.Session.SetInt32("LogueadoId", 0);
-            HttpContext.Session.SetString("LogueadoRol", "");
+            HttpContext.Session.Clear();
             return  RedirectToAction("Index");
         }
 

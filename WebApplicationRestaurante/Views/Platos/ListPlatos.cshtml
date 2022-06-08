@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<Dominio.Plato>
+
+@{
+    ViewData["Title"] = "ListPlatos";
+}
+
+<h1>ListPlatos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Likes)
+            </td>
+
+           
+            @if (Context.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                <td>
+                    @Html.ActionLink("Like", "Like", new { id = item.Id })
+                </td>
+            }
+        </tr>
+}
+    </tbody>
+</table>

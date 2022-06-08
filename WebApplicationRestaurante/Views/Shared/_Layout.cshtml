@@ -20,42 +20,51 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (ViewBag.LogeadoRol == null )
+                        @if (Context.Session.GetString("LogueadoRol") == null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Registrarse</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Registro">Registrarse</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Platos" asp-action="ListPlatos">Lista de Platos</a>
                             </li>
 
                         }
 
 
-                        @if (ViewBag.LogeadoRol == "Cliente")
+                        @if (Context.Session.GetString("LogueadoRol") == "Cliente")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rol Cliente</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Platos" asp-action="ListPlatos">Lista de Platos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="MisServicios">Mis Servicios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SolicitarServicio">Solicitar Servicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
                             </li>
                         }
 
-                        @if (ViewBag.LogeadoRol == "Mozo")
+                        @if (Context.Session.GetString("LogueadoRol") == "Mozo")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rol Mozo</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Servicios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
                             </li>
                         }
 
-                        @if (ViewBag.LogeadoRol == "Repartidor")
+                        @if (Context.Session.GetString("LogueadoRol") == "Repartidor")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rol Repartidor</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Servicios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>

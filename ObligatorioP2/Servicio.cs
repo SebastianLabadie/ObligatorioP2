@@ -9,9 +9,11 @@ namespace Dominio
 
         public int Id { get; set; } //Se crea los atributos de la clase
 
+        public string Estado { get; set; } //Abierto, Cerrado
+
         public DateTime Fecha { get; set; }
 
-        private List<Plato> platos = new List<Plato>();
+        private List<PlatoCantidad> carrito = new List<PlatoCantidad>();
 
 
         //Constructor por fecha
@@ -20,20 +22,21 @@ namespace Dominio
             this.Id = UltimoId;
             UltimoId++; //Se autonumera el Id al crear un nuevo objeto se agrega 1 al ultimoid
             this.Fecha = pFecha;
+            this.Estado = "Abierto";
         }
 
     
         //Se agrega el plato a la lista platos,enviando por parametro el objeto Plato
-        public void agregarPlato(Plato unPlato)
+        public void agregarPlato(PlatoCantidad unPlato)
         {
-            platos.Add(unPlato);
+            carrito.Add(unPlato);
         }
 
         //Se realiza un overrride a la funcion ToString para permitir mostrar datos de cada objeto en el que se llame esta funcion
         public override string ToString()
         {
             string platosInfo = "";
-            foreach (Plato p in platos)
+            foreach (PlatoCantidad p in carrito)
             {
                 platosInfo += p.ToString()+", ";
             }

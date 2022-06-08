@@ -14,7 +14,23 @@ namespace Dominio
         private List<Plato> platos = new List<Plato>();
         private List<Repartidor> repartidores = new List<Repartidor>();
         private List<Mozo> mozos = new List<Mozo>();
+
+        public List<Servicio> GetServicios()
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Delivery d in deliverys)
+            {
+                ret.Add(d);
+            }
+            foreach (Local l in locales)
+            {
+                ret.Add(l);
+            }
+            return ret;
+        }
+
         private List<TipoVehiculo> tipovehiculos = new List<TipoVehiculo>();
+
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Persona> personas = new List<Persona>();
 
@@ -273,82 +289,76 @@ namespace Dominio
 
         }
 
-        public void ListarPlatos()
+        public List<Plato> GetPlatos() 
         {
-
+            List<Plato> ret = new List<Plato>();
+            
             //Si existen Objetos de tipo Plato en la lista platos, se van a mostrar en pantalla, sino devuelve mensaje
             if (platos.Count() > 0)
             {
-                Console.WriteLine("Lista de Platos: ");
+                
                 foreach (Plato plato in platos)
                 {
-                    Console.WriteLine(plato.ToString());
+                    ret.Add(plato);
                 }
             }
-            else
-            {
-                Console.WriteLine("No se encuentra registro de Platos.");
-            }
+           
+            return ret;
         }
 
-        public void ListarClientesPorNomApe()
+        public List<Plato> getListaPlatos()
         {
+            List<Plato> ret = new List<Plato>();
+            //Si existen Objetos de tipo Plato en la lista platos, se van a mostrar en pantalla, sino devuelve mensaje
+            if (platos.Count() > 0)
+            {
+                platos.Sort();
+                ret = platos;
+            }
+
+            return ret;
+        }
+
+
+        public List<Cliente> GetClientesPorNomApe()
+        {
+
+            List<Cliente> ret = new List<Cliente>();
             //Si existen Objetos de Tipo Cliente en la lista cliente, se va a realizar un Sort y mostrar por pantalla
-            if (clientes.Count() > 0)
+            
+            clientes.Sort(); //Se realiza para ordenar la lista 
+
+
+            foreach (Cliente cl in clientes) //Recorremos la lista de clientes
             {
-
-                clientes.Sort(); //Se realiza para ordenar la lista 
-
-
-                foreach (Cliente cl in clientes) //Recorremos la lista de clientes
-                {
-                    Console.WriteLine(cl.ToString());
-                }
+                ret.Add(cl);
             }
-            else
-            {
-                Console.WriteLine("No se encuentra registro de Clientes.");
-            }
-            //clientes.Sort();
 
 
-
+            return ret;
+            
         }
 
-        public void ListarServiciosDeRepartidor()
+        public int GetRepartidor(string NomRep, string ApellidoRep)
         {
-            //Se pide ingreso de Datos
-            Console.WriteLine("Ingrese Nombre de Repartidor");
-            String NomRep = Console.ReadLine().ToUpper();
-
-            Console.WriteLine("Ingrese Apellido de Repartidor");
-            String ApellidoRep = Console.ReadLine().ToUpper();
-
+           
             int pIdRep = 0;
-
+            
             //Con el Nombre y apellido solicitado anteriormente, vamos a buscar el Id del repartidor
             foreach (Repartidor rep in repartidores)
             {
-               if (NomRep == rep.Nombre.ToUpper() && ApellidoRep == rep.Apellido.ToUpper()) 
+                if (NomRep == rep.Nombre.ToUpper() && ApellidoRep == rep.Apellido.ToUpper())
                 {
                     pIdRep = rep.Id;
                 }
             }
 
-            //Si el Id del repartidor es 0 significa que no se encuentra un repartidor
-            if (pIdRep == 0)
-            {
-                Console.WriteLine("No se encuentran repartidores con el Nombre " + NomRep + " y apellido " + ApellidoRep);
-                return;
-            }
+            return pIdRep;
 
-            Console.WriteLine("Ingrese Fecha desde");
-            DateTime pFchDesde = DateTime.Parse(Console.ReadLine());
+        }
 
-            Console.WriteLine("Ingrese Fecha hasta");
-            DateTime pFchHasta = DateTime.Parse(Console.ReadLine());
-
-            Console.WriteLine("Lista de Servicios: ");
+        public List<Delivery> GetServiciosDeRepartidor(int pIdRep,DateTime pFchDesde,DateTime pFchHasta)
+        {
 
             List<Delivery> deliveriesFiltered = new List<Delivery>(); //Se crea una nueva lista para devolverla ordenadad
 
@@ -363,26 +373,15 @@ namespace Dominio
                 }
             }
 
-            //En el caso que no coinicidan con el filtro y la lista sea vacia, devuelve mensaje de error
-            if (deliveriesFiltered.Count == 0)
-            {
-                Console.WriteLine("No hay registros.");
-            }
-            else
-            {
-                foreach (Delivery delivery in deliveriesFiltered)
-                {
-                   Console.WriteLine(delivery.ToString());
-                }
-            }
+            return deliveriesFiltered;
 
         }
 
-        public void ModificarPrecioMinimoPlatos()
+        public string ModificarPrecioMinimoPlatos(string linestr)
         {
-            Console.WriteLine("Ingrese nuevo precio MINIMO de Platos:");
 
-            string linestr = Console.ReadLine();
+
+            string msg = "";
 
             //Expresion regular para verificar que el dato ingresado sea numerico
             if (Regex.IsMatch(linestr, @"^[0-9]+$"))
@@ -393,56 +392,35 @@ namespace Dominio
                 if (line > 0)
                 {
                     Plato.precioMinimo = line; //Actualizo el precio minimo del Plato
-                    Console.WriteLine("El Precio Minimo se actualizo a " + Plato.precioMinimo);
+                    msg = "El Precio Minimo se actualizo a " + Plato.precioMinimo;
                 }
                 else
                 {
-                    Console.WriteLine("Ingrese un valor mayor a 0");
+                    msg = "Ingrese un valor mayor a 0";
                 }
 
             }
             else
             {
-                Console.WriteLine("Ingrese un valor numerico.");
+                msg = "Ingrese un valor numerico.";
             }
 
-            
+            return msg;
 
         }
 
-        public void AltaMozoPorUsuario()
+        
+
+        public void Likear(int id)
         {
-
-            //Pido los datos por pantalla
-            Console.WriteLine("Ingrese Numero de Funcionario");
-            int pNroFuncionario = Int32.Parse(Console.ReadLine());
-
-            Console.WriteLine("Ingrese Nombre de Funcionario");
-            string pNombre = Console.ReadLine();
-
-            Console.WriteLine("Ingrese Apellido de Funcionario");
-            string pApellido = Console.ReadLine();
-
-            //Llama al proceso crear Mozo
-            Mozo m = AltaMozo(pNroFuncionario,pNombre,pApellido);
-
-            //En el caso que no se cree el mozo devuelve mensaje de error
-            if (m == null)
+            foreach (Plato p in platos)
             {
-                Console.WriteLine("Mozo no creado.");
-                
+                if (p.Id.Equals(id))
+                {
+                    p.Likes++;
+                }
             }
-            else
-            {
-                Console.WriteLine("Mozo " + m.ToString() + " Creado Correctamente.");
-            }
-
         }
-
-
-
-
-
 
     }
 }
