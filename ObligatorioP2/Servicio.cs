@@ -13,15 +13,18 @@ namespace Dominio
 
         public DateTime Fecha { get; set; }
 
-        private List<PlatoCantidad> carrito = new List<PlatoCantidad>();
+        public Cliente Cliente { get; set; }
+
+        public List<PlatoCantidad> carrito = new List<PlatoCantidad>();
 
 
         //Constructor por fecha
-        public Servicio(DateTime pFecha)
+        public Servicio(DateTime pFecha,Cliente cliente)
         {
             this.Id = UltimoId;
             UltimoId++; //Se autonumera el Id al crear un nuevo objeto se agrega 1 al ultimoid
             this.Fecha = pFecha;
+            this.Cliente = cliente;
             this.Estado = "Abierto";
         }
 
@@ -43,6 +46,8 @@ namespace Dominio
 
             return "fecha "+Fecha.ToString()+" platos: "+platosInfo;
         }
+
+        public abstract double CalcularCosto();
 
         public abstract bool EsValido(); //Se defune una funcion Abstracta para utilizar en las clases hijas que se generen.
     }

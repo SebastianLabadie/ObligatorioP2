@@ -6,18 +6,6 @@
 
 <h1>MisServicios</h1>
 
-
-<form method="post">
-    <label>Fecha 1</label><br>
-    <input type="date" name="f1" /><br>
-
-    <label>Fecha 2</label><br>
-    <input type="date" name="f2" /><br>
-
-    <input type="submit" value="Buscar" />
-</form>
-
-
 <table class="table">
     <thead>
         <tr>
@@ -59,15 +47,8 @@
                 @item.CalcularCosto()
 
             </td>
-            <td>
-                @Html.ActionLink("Platos", "Platos", new { Id = item.Id })
-            </td>
-            @if (item.Estado == "Abierto")
-            {
-                <td>
-                    @Html.ActionLink("Cerrar", "Cerrar", new { Id = item.Id })
-                </td>
-            }
+
+
         </tr>
         }
     </tbody>

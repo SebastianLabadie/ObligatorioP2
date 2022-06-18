@@ -59,15 +59,8 @@
                 @item.CalcularCosto()
 
             </td>
-            <td>
-                @Html.ActionLink("Platos", "Platos", new { Id = item.Id })
-            </td>
-            @if (item.Estado == "Abierto")
-            {
-                <td>
-                    @Html.ActionLink("Cerrar", "Cerrar", new { Id = item.Id })
-                </td>
-            }
+
+
         </tr>
         }
     </tbody>

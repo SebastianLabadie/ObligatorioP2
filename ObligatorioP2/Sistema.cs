@@ -15,7 +15,77 @@ namespace Dominio
         private List<Repartidor> repartidores = new List<Repartidor>();
         private List<Mozo> mozos = new List<Mozo>();
 
-        public List<Servicio> GetServicios()
+        public List<Servicio> GetServicios(int pId)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Delivery d in deliverys)
+            {
+                if (d.Cliente.Id.Equals(pId))
+                {
+                    ret.Add(d);
+                }
+            }
+            foreach (Local l in locales)
+            {
+                if (l.Cliente.Id.Equals(pId))
+                {
+                    ret.Add(l);
+                }
+            }
+            return ret;
+        }
+
+        public List<Servicio> GetServiciosByDate(DateTime f1,DateTime f2, int pId)
+        {
+
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Delivery d in deliverys)
+            {
+                if (d.Cliente.Id.Equals(pId) && (d.Fecha >= f1 && d.Fecha <= f2))
+                {
+                    ret.Add(d);
+                }
+            }
+            foreach (Local l in locales)
+            {
+                if (l.Cliente.Id.Equals(pId) && (l.Fecha >= f1 && l.Fecha <= f2))
+                {
+                    ret.Add(l);
+                }
+            }
+            return ret;
+        }
+
+        public List<Servicio> GetServiciosLocalesByDateMozo(DateTime f1, DateTime f2, int pId)
+        {
+
+            List<Servicio> ret = new List<Servicio>();
+           
+            foreach (Local l in locales)
+            {
+                if (l.Mozo.Id.Equals(pId) && (l.Fecha >= f1 && l.Fecha <= f2))
+                {
+                    ret.Add(l);
+                }
+            }
+            return ret;
+        }
+
+        public List<Servicio> GetServiciosByRepartidor(int pId)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Delivery d in deliverys)
+            {
+                if (d.Repartidor.Id.Equals(pId))
+                {
+                    ret.Add(d);
+                }
+            }
+            
+            return ret;
+        }
+
+        public List<Servicio> GetServiciosDelivery()
         {
             List<Servicio> ret = new List<Servicio>();
             foreach (Delivery d in deliverys)
@@ -28,6 +98,87 @@ namespace Dominio
             }
             return ret;
         }
+
+        public Servicio GetServicioById(int pId )
+        {
+            Servicio ret = null;
+
+            foreach (Delivery d in deliverys)
+            {
+                if (d.Id.Equals(pId))
+                {
+                    ret = d;
+                }
+            }
+            foreach (Local l in locales)
+            {
+                if (l.Id.Equals(pId))
+                {
+                    ret = l;
+                }
+            }
+            return ret;
+        }
+
+
+        public string SetServicioEstadoById(int pId)
+        {
+
+            string mensaje = "";
+            foreach (Delivery d in deliverys)
+            {
+                if (d.Id.Equals(pId) && d.Estado.Equals("Abierto") )
+                {
+                    d.Estado = "Cerrado";
+                    mensaje = "Servicio Cerrado";
+                }
+
+            }
+            foreach (Local l in locales)
+            {
+                if (l.Id.Equals(pId) && l.Equals("Abierto"))
+                {
+                    l.Estado = "Cerrado";
+                    mensaje = "Servicio Cerrado";
+                }
+            }
+            return mensaje;
+        }
+
+        public List<Servicio> GetServiciosByPlato(int pClienteId,int pPlatoId)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Delivery d in deliverys)
+            {
+                if (d.Cliente.Id.Equals(pClienteId))
+                {
+                    foreach (PlatoCantidad item in d.carrito)
+                    {
+                        if (item.Plato.Id.Equals(pPlatoId) && item.Cantidad > 1) 
+                        {
+                            ret.Add(d);
+                        }
+                    }
+                    
+                }
+            }
+            foreach (Local l in locales)
+            {
+                if (l.Cliente.Id.Equals(pClienteId))
+                {
+                    foreach (PlatoCantidad item in l.carrito)
+                    {
+                        if (item.Plato.Id.Equals(pPlatoId) && item.Cantidad > 1)
+                        {
+                            ret.Add(l);
+                        }
+                    }
+
+                }
+            }
+            return ret;
+        }
+
 
         private List<TipoVehiculo> tipovehiculos = new List<TipoVehiculo>();
 
@@ -100,18 +251,22 @@ namespace Dominio
             Cliente cl5 = AltaCliente("marcelo@gmail.com", "Aa123456", "MARCELO", "MARCELO");
             for (int i = 1; i<=10; i++)
             {
+                
                 Plato p1 = AltaPlato($"Plato {i}", 20+i);
-                
-                Mozo m1 = AltaMozo(120+i, $"Mozo {i}"+i, $"Mozo {i}");
-                AltaLocal(DateTime.Now, 1, 4, m1);
-                
+                PlatoCantidad pc1 = new PlatoCantidad(p1, 2);
+
+
+                Mozo m1 = AltaMozo(120+i, $"Mozo {i}", $"Mozo {i}");
+                Local l = AltaLocal(DateTime.Now, 1, 4, m1,cl);
+                l.agregarPlato(pc1);
 
                 //Esto se reliza para poder crear distintos Repartidores con diferente nombre.
                 if (i < 3)
                 {
 
                     Repartidor r1 = AltaRepartidor(t1, $"Repartidor {i}", $"Repartidor {i}");
-                    Delivery d1 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r1);
+                    Delivery d1 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r1, cl);
+                    d1.agregarPlato(pc1);
                 }
                       
                         
@@ -119,7 +274,7 @@ namespace Dominio
                 if(i< 7)
                 {
                     Repartidor r2 = AltaRepartidor(t2, $"Repartidor {i}", $"Repartidor {i}");
-                    Delivery d2 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r2);
+                    Delivery d2 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r2, cl);
                 }
 
 
@@ -127,7 +282,7 @@ namespace Dominio
                 if (i >= 7)
                 {
                     Repartidor r3 = AltaRepartidor(t3, $"Repartidor {i}", $"Repartidor {i}");
-                    Delivery d3 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r3);
+                    Delivery d3 = AltaDelivery(DateTime.Now, "Comercio 2000", 1+i, r3, cl);
                 }
                     
                     
@@ -138,11 +293,11 @@ namespace Dominio
 
         }
 
-        public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor)
+        public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor,Cliente cliente)
         {
 
             //Creamos el objeto nuevo
-            Delivery nuevo = new Delivery(pFecha, pDireccionEnvio, pDistanciaRestaurante, pRepartidor);
+            Delivery nuevo = new Delivery(pFecha, pDireccionEnvio, pDistanciaRestaurante, pRepartidor,cliente);
 
             //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())
@@ -158,10 +313,10 @@ namespace Dominio
             
         }
 
-        public Local AltaLocal(DateTime pFecha, int pNroMesa, int pCantComensales, Mozo pMozo)
+        public Local AltaLocal(DateTime pFecha, int pNroMesa, int pCantComensales, Mozo pMozo, Cliente cliente)
         {
 
-            Local nuevo = new Local(pFecha, pNroMesa, pCantComensales,pMozo);
+            Local nuevo = new Local(pFecha, pNroMesa, pCantComensales,pMozo,cliente);
 
             //En caso de ser valido el objeto creado, se agrega a la lista, sino devuelve nulo
             if (nuevo.EsValido())

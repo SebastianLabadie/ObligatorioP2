@@ -1,0 +1,51 @@
+﻿@model Dominio.Servicio
+
+@{
+    ViewData["Title"] = "Platos";
+}
+
+<h1>Platos</h1>
+<label>Costo Final:</label>
+<label>@Model.CalcularCosto()</label>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+               Precio
+            </th>
+            <th>
+               Cantidad
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+           
+              
+
+    @foreach (var item2 in Model.carrito)
+    {
+        <tr>
+            <td>
+                @item2.Plato.Nombre
+
+            </td>
+            <td>
+                @item2.Plato.Precio
+            </td>
+            <td>
+                @item2.Cantidad
+            </td>
+
+        </tr>
+    }
+                   
+    </tbody>
+</table>

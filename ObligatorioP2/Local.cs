@@ -11,7 +11,7 @@ namespace Dominio
         public Mozo Mozo { get; set; }
 
         //Constructor
-        public Local(DateTime pFecha,int pNroMesa,int pCantComensales,Mozo pMozo) : base(pFecha)
+        public Local(DateTime pFecha,int pNroMesa,int pCantComensales,Mozo pMozo,Cliente cliente) : base(pFecha,cliente)
         {
        
             this.NroMesa = pNroMesa;
@@ -32,5 +32,20 @@ namespace Dominio
                 return false;
             }
         }
+
+        public override double CalcularCosto()
+        {
+            double costo = 0;
+            foreach (PlatoCantidad pc in carrito)
+            {
+                costo += pc.Plato.Precio * pc.Cantidad;
+                costo += PrecioCubierto * CantComensales;
+
+            }
+
+            return costo;
+        }
+
+
     }
 }

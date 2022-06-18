@@ -44,32 +44,35 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="MisServicios">Mis Servicios</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="MisServiciosPorPlato">Mis Servicios por Plato</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SolicitarServicio">Solicitar Servicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
                             </li>
-                        }
+                          }
 
                         @if (Context.Session.GetString("LogueadoRol") == "Mozo")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Servicios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
-                            </li>
-                        }
+                                                {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mozo" asp-action="MisServicios">Mis Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
+                        </li>
+}
 
                         @if (Context.Session.GetString("LogueadoRol") == "Repartidor")
-                        {
+{
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Mis Servicios</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Repartidor" asp-action="MisServicios">Mis Servicios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
                             </li>
-                        }
+}
 
 
                     </ul>
