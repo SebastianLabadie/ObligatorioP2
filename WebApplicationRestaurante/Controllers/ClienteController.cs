@@ -62,7 +62,19 @@ namespace WebApplicationRestaurante.Controllers
         public IActionResult Platos(int id)
         {
             Servicio serv = s.GetServicioById(id);
+            List<Plato> platos = s.GetPlatos();
+            ViewBag.platos = platos;
+
+
             return View(serv);
+        }
+
+        [HttpPost]
+        public IActionResult Platos(int platoId,int cantidad,int servicioId)
+        {
+            s.AgregarPlatoById(platoId, cantidad, servicioId);
+
+            return RedirectToAction("Platos");
         }
 
 
@@ -106,12 +118,95 @@ namespace WebApplicationRestaurante.Controllers
 
         public IActionResult Cerrar(int Id)
         {
-
+            string msg = "";
             if (Id > 0)
             {
-                //wea
+               msg = s.SetServicioEstadoById(Id);
             }
+            ViewBag.msg = msg;
             return RedirectToAction("MisServicios"); //View();
         }
+
+
+        public IActionResult SolicitarServicio()
+        {
+          
+            return  View();
+        }
+
+        [HttpPost]
+        public IActionResult ServicioTipo(string ServicioTipo)
+        {
+
+            return RedirectToAction("SolicitarServicio"+ ServicioTipo); //View();
+        }
+
+        public IActionResult ServicioMasCaro()
+        {
+            List<Servicio> ser = new List<Servicio>();
+            int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+
+            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            {
+                ser = s.GetServiciosMasCaros((int)idLogueado);
+            }
+            return View(ser);
+        }
+
+        public IActionResult SolicitarServicioLocal()
+        {
+
+            List<Mozo> mo = s.GetMozos();
+            ViewBag.mozos = mo;
+            return View();
+        }
+       
+        [HttpPost]
+        public IActionResult SolicitarServicioLocal(int NroMesa, int CantComensales, int mozoId)
+        {
+            int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+
+            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            {
+                Cliente cli = s.GetClienteById((int)idLogueado);
+                Mozo mo = s.GetMozoById(mozoId);
+                s.AltaLocal(DateTime.Now, NroMesa, CantComensales, mo, cli);
+            
+            }
+            return RedirectToAction("SolicitarServicioLocal");
+            
+        }
+
+        public IActionResult SolicitarServicioDelivery()
+        {
+
+            List<Repartidor> re = s.GetRepartidores();
+            ViewBag.repartidores = re;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SolicitarServicioDelivery(string DireccionEnvio,double DistanciaARestaurante,int repartidorId)
+        {
+            int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+
+            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            {
+                Cliente cli = s.GetClienteById((int)idLogueado);
+                Repartidor re = s.GetRepartidorById(repartidorId);
+                s.AltaDelivery(DateTime.Now,DireccionEnvio,DistanciaARestaurante,re, cli);
+
+            }
+            return RedirectToAction("SolicitarServicioDelivery");
+
+        }
+
+
+
+
+
     }
 }

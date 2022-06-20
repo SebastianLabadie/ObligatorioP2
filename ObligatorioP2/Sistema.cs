@@ -136,7 +136,7 @@ namespace Dominio
             }
             foreach (Local l in locales)
             {
-                if (l.Id.Equals(pId) && l.Equals("Abierto"))
+                if (l.Id.Equals(pId) && l.Estado.Equals("Abierto"))
                 {
                     l.Estado = "Cerrado";
                     mensaje = "Servicio Cerrado";
@@ -286,13 +286,17 @@ namespace Dominio
                 }
                     
                     
-                }
+            }
 
-            
 
+
+            Plato p1a = AltaPlato($"Plato 200",30);
+            PlatoCantidad pc1a = new PlatoCantidad(p1a, 2);
+            Local la = AltaLocal(DateTime.Now, 1, 4, mozos[1], cl);
+            la.agregarPlato(pc1a);
 
         }
-
+        
         public Delivery AltaDelivery(DateTime pFecha,string pDireccionEnvio, double pDistanciaRestaurante, Repartidor pRepartidor,Cliente cliente)
         {
 
@@ -461,6 +465,75 @@ namespace Dominio
             return ret;
         }
 
+        public List<Repartidor> GetRepartidores()
+        {
+
+            return repartidores;
+        }
+
+        public List<Mozo> GetMozos()
+        {
+
+            return mozos;
+        }
+
+        public Mozo GetMozoById(int pId)
+        {
+            Mozo ret = null;
+            foreach (Mozo item in mozos)
+            {
+                if (item.Id.Equals(pId))
+                {
+                    ret = item;
+                    
+                }
+            }
+            return ret;
+
+
+        }
+
+
+        public Repartidor GetRepartidorById(int pId)
+        {
+            Repartidor ret = null;
+            foreach (Repartidor item in repartidores)
+            {
+                if (item.Id.Equals(pId))
+                {
+                    ret = item;
+
+                }
+            }
+            return ret;
+
+
+        }
+
+        public void AgregarPlatoById(int pPlatoId,int cantidad,int pServicioId)
+        {
+
+            Plato plato = null;
+            //Si existen Objetos de tipo Plato en la lista platos, se van a mostrar en pantalla, sino devuelve mensaje
+            if (platos.Count() > 0)
+            {
+
+                foreach (Plato platolista in platos)
+                {
+                    if (platolista.Id.Equals(pPlatoId))
+                    {
+                        plato = platolista;
+                        PlatoCantidad platoCantidad = new PlatoCantidad(plato, cantidad);
+                        Servicio ser = GetServicioById(pServicioId);
+                        ser.agregarPlato(platoCantidad);
+
+                    }
+                }
+            }
+
+            
+        }
+
         public List<Plato> getListaPlatos()
         {
             List<Plato> ret = new List<Plato>();
@@ -494,6 +567,23 @@ namespace Dominio
             
         }
 
+        public Cliente GetClienteById(int pId)
+        {
+            Cliente cli = null;
+            foreach (Cliente cl in clientes) //Recorremos la lista de clientes
+            {
+                if (cl.Id.Equals(pId))
+                {
+                    cli = cl;
+                }
+               
+            }
+
+
+            return cli;
+
+        }
+
         public int GetRepartidor(string NomRep, string ApellidoRep)
         {
            
@@ -525,6 +615,57 @@ namespace Dominio
                 if (delivery.Repartidor.Id == pIdRep && delivery.Fecha >= pFchDesde && delivery.Fecha <= pFchHasta)
                 {
                     deliveriesFiltered.Add(delivery);
+                }
+            }
+
+            return deliveriesFiltered;
+
+        }
+
+        public List<Servicio> GetServiciosMasCaros(int pIdCliente)
+        {
+
+            List<Servicio> deliveriesFiltered = new List<Servicio>(); //Se crea una nueva lista para devolverla
+            double PrecioMasCaro = 0;
+
+            foreach (Delivery delivery in deliverys)
+            {
+                //Si el objeto Delivery coincide con el Id del repartidor y el rango de fechas, se agrega a la nueva lista
+
+                if (delivery.Cliente.Id.Equals(pIdCliente))
+                {
+
+                    if (delivery.CalcularCosto() > PrecioMasCaro)
+                    {
+                        PrecioMasCaro = delivery.CalcularCosto();
+                        deliveriesFiltered.Clear();
+                        deliveriesFiltered.Add(delivery);
+
+                    }
+                    else if (delivery.CalcularCosto() == PrecioMasCaro) 
+                    {
+                        deliveriesFiltered.Add(delivery);
+                    }
+
+                   
+                }
+            }
+
+            foreach (Local l in locales)
+            {
+                if (l.Cliente.Id.Equals(pIdCliente))
+                {
+                    if (l.CalcularCosto() > PrecioMasCaro)
+                    {
+                        PrecioMasCaro = l.CalcularCosto();
+                        deliveriesFiltered.Clear();
+                        deliveriesFiltered.Add(l);
+
+                    }
+                    else if (l.CalcularCosto() == PrecioMasCaro)
+                    {
+                        deliveriesFiltered.Add(l);
+                    }
                 }
             }
 

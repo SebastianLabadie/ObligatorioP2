@@ -1,0 +1,46 @@
+﻿@model Dominio.Local
+
+@{
+    ViewData["Title"] = "SolicitarServicioLocal";
+}
+
+<h1>SolicitarServicioLocal</h1>
+
+<h4>Local</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SolicitarServicioLocal">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NroMesa" class="control-label"></label>
+                <input asp-for="NroMesa" class="form-control" />
+                <span asp-validation-for="NroMesa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantComensales" class="control-label"></label>
+                <input asp-for="CantComensales" class="form-control" />
+                <span asp-validation-for="CantComensales" class="text-danger"></span>
+            </div>
+            <select name="mozoId">
+                @foreach (var mozo in ViewBag.mozos)
+                {
+                    <option value="@mozo.Id"> @mozo.Nombre </option>
+                }
+            </select>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

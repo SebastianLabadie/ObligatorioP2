@@ -7,9 +7,27 @@
 <h1>Platos</h1>
 <label>Costo Final:</label>
 <label>@Model.CalcularCosto()</label>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+@if (Model.Estado == "Abierto")
+{
+<form method="post">
+    <label>Plato</label>
+    <select name="platoId">
+        @foreach (var plato in ViewBag.platos)
+        {
+            <option value="@plato.Id"> @plato.Nombre $@plato.Precio </option>
+        }
+    </select>
+
+    <label>Cantidad</label>
+    <input type="number" name="cantidad" />
+
+    <input class="d-none" type="number" name="servicioId" value="@Model.Id" />
+
+    <input type="submit" value="Confirmar" />
+</form>
+}
+
 <table class="table">
     <thead>
         <tr>

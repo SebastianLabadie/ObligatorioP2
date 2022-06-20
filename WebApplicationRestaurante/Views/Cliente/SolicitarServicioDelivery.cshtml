@@ -1,0 +1,42 @@
+﻿@model Dominio.Delivery
+
+@{
+    ViewData["Title"] = "SolicitarServicioDelivery";
+}
+
+<h1>Solicitar Servicio Delivery</h1>
+
+<h4>Delivery</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SolicitarServicioDelivery">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DireccionEnvio" class="control-label"></label>
+                <input asp-for="DireccionEnvio" class="form-control" />
+                <span asp-validation-for="DireccionEnvio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DistanciaARestaurante" class="control-label"></label>
+                <input asp-for="DistanciaARestaurante" class="form-control" />
+                <span asp-validation-for="DistanciaARestaurante" class="text-danger"></span>
+            </div>
+
+            
+            <select name="repartidorId">
+                @foreach (var repartidor in ViewBag.repartidores)
+                {
+                    <option value="@repartidor.Id"> @repartidor.Nombre </option>
+                }
+            </select>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
