@@ -10,21 +10,21 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SolicitarServicioDelivery">
+        <form asp-action="SolicitarServicioDelivery" id="AltaServicioDelivery">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DireccionEnvio" class="control-label"></label>
-                <input asp-for="DireccionEnvio" class="form-control" />
-                <span asp-validation-for="DireccionEnvio" class="text-danger"></span>
+                <input asp-for="DireccionEnvio" id="DireccionEnvio" class="form-control" />
+               
             </div>
             <div class="form-group">
                 <label asp-for="DistanciaARestaurante" class="control-label"></label>
-                <input asp-for="DistanciaARestaurante" class="form-control" />
-                <span asp-validation-for="DistanciaARestaurante" class="text-danger"></span>
+                <input asp-for="DistanciaARestaurante" id="DistanciaARestaurante" class="form-control" />
+                
             </div>
 
-            
-            <select name="repartidorId">
+
+            <select name="repartidorId" id="repartidorSel">
                 @foreach (var repartidor in ViewBag.repartidores)
                 {
                     <option value="@repartidor.Id"> @repartidor.Nombre </option>
@@ -37,6 +37,53 @@
     </div>
 </div>
 
+
+@if (TempData["msg"] != null)
+{
+    <script type="text/javascript">
+    const notyf = new Notyf();
+    notyf.success({
+        message: "@TempData["msg"]",
+        duration: 6000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+    })
+    </script>
+}
+
+<script>
+
+    document.querySelector("#AltaServicioDelivery").addEventListener('submit', validarDatos);
+
+    function validarDatos(evento) {
+
+        evento.preventDefault();
+
+        let DireccionEnvio = document.querySelector("#DireccionEnvio").value;
+        let DistanciaARestaurante = parseInt(document.querySelector("#DistanciaARestaurante").value);
+        let repartidorSel = parseInt(document.querySelector('#repartidorSel').value);
+
+        if (DireccionEnvio != '' && DistanciaARestaurante > 0 && repartidorSel > 0) {
+            this.submit();
+        } else {
+            const notyf = new Notyf();
+            notyf.error({
+                message: "Error: Distancia a Restaurante No puede ser vacio, Direccion de Envio no puede ser vacio o Seleccione Repartidor",
+                duration: 3500,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+            })
+        }
+
+    }
+</script>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

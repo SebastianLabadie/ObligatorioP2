@@ -2,10 +2,10 @@
 @model IEnumerable<Dominio.Plato>
 
 @{
-    ViewData["Title"] = "ListPlatos";
+    ViewData["Title"] = "Lista de Platos";
 }
 
-<h1>ListPlatos</h1>
+<h1>Lista de Platos</h1>
 
 <table class="table">
     <thead>
@@ -27,29 +27,46 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Likes)
-            </td>
-
-           
-            @if (Context.Session.GetString("LogueadoRol") == "Cliente")
-            {
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    @Html.ActionLink("Like", "Like", new { id = item.Id })
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
-            }
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Likes)
+                </td>
+
+
+                @if (Context.Session.GetString("LogueadoRol") == "Cliente")
+                {
+                    <td>
+                        @Html.ActionLink("Like", "Like", new { id = item.Id })
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@if (TempData["msg"] != null)
+{
+    <script type="text/javascript">
+    const notyf = new Notyf();
+    notyf.success({
+        message: "@TempData["msg"]",
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+    })
+    </script>
+}

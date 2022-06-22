@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Dominio.Servicio>
 
 @{
-    ViewData["Title"] = "Servicio mas Caro";
+    ViewData["Title"] = "Mis Servicio/s más Caros";
 }
 
-<h1>MisServicios</h1>
+<h1>Mis Servicio/s más Caros</h1>
 
 
 <table class="table">
@@ -45,7 +45,7 @@
                 @Html.DisplayFor(modelItem => item.Fecha)
             </td>
             <td>
-                @item.CalcularCosto()
+                @Html.DisplayFor(modelItem => item.PrecioFinal)
             </td>
         </tr>
         }

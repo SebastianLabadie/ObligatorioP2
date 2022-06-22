@@ -17,6 +17,8 @@ namespace Dominio
 
         public List<PlatoCantidad> carrito = new List<PlatoCantidad>();
 
+        public double PrecioFinal { get; set; }
+
 
         //Constructor por fecha
         public Servicio(DateTime pFecha,Cliente cliente)
@@ -26,6 +28,7 @@ namespace Dominio
             this.Fecha = pFecha;
             this.Cliente = cliente;
             this.Estado = "Abierto";
+            this.PrecioFinal = 0;
         }
 
     

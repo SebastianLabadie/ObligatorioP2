@@ -27,6 +27,7 @@ namespace WebApplicationRestaurante.Controllers
         {
 
             s.Likear(id);
+            TempData["msg"] = $"Plato #{id} likeado con éxito";
             return RedirectToAction("ListPlatos");
         }
 

@@ -10,19 +10,19 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SolicitarServicioLocal">
+        <form asp-action="SolicitarServicioLocal" id="AltaLocal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NroMesa" class="control-label"></label>
-                <input asp-for="NroMesa" class="form-control" />
-                <span asp-validation-for="NroMesa" class="text-danger"></span>
+                <input asp-for="NroMesa" in="NroMesa" class="form-control" />
+                
             </div>
             <div class="form-group">
                 <label asp-for="CantComensales" class="control-label"></label>
-                <input asp-for="CantComensales" class="form-control" />
-                <span asp-validation-for="CantComensales" class="text-danger"></span>
+                <input asp-for="CantComensales" id="CantComensales"class="form-control" />
+                
             </div>
-            <select name="mozoId">
+            <select name="mozoId" id="mozosel">
                 @foreach (var mozo in ViewBag.mozos)
                 {
                     <option value="@mozo.Id"> @mozo.Nombre </option>
@@ -40,6 +40,51 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (TempData["msg"] != null)
+{
+    <script type="text/javascript">
+    const notyf = new Notyf();
+    notyf.success({
+        message: "@TempData["msg"]",
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+    })
+    </script>
+}
+
+
+<script>
+
+    document.querySelector("#AltaLocal").addEventListener('submit', validarDatos);
+
+    function validarDatos(evento) {
+
+        evento.preventDefault();
+
+        let NroMesa = parseInt(document.querySelector("#NroMesa").value);
+        let CantComensales = parseInt(document.querySelector("#CantComensales").value);
+        let Mozo = parseInt(document.querySelector('#mozosel').value);
+
+        if (NroMesa > 0 && CantComensales > 0 && Mozo > 0) {
+            this.submit();
+        } else {
+            const notyf = new Notyf();
+            notyf.error({
+                message: "Error: Nro de Mesa, Cantidad de Comensales o Mozo no puede ser vacio ",
+                duration: 3500,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+            })
+        }
+
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -7,63 +7,112 @@
 <h1>MisServicios</h1>
 
 
-<form method="post">
-    <label>Fecha 1</label><br>
-    <input type="date" name="f1" /><br>
+<form method="post" class="d-flex mb-2" id="formBuscarServicios">
+    <div>
+        <label>Fecha 1</label><br>
+        <input type="date" name="f1" id="txtF1" /><br>
+    </div>
+    <div class="ml-1">
+        <label>Fecha 2</label><br>
+        <input type="date" name="f2" id="txtF2" /><br>
+    </div>
 
-    <label>Fecha 2</label><br>
-    <input type="date" name="f2" /><br>
-
-    <input type="submit" value="Buscar" />
+    <input class="ml-1" type="submit" value="Buscar" />
 </form>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                Tipo
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                Costo Final
-            </th>
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @item.GetType().Name
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @item.CalcularCosto()
+@if (Model.Count() > 0)
+{
 
-            </td>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    Costo Final
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @item.GetType().Name
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrecioFinal)
+
+                    </td>
 
 
-        </tr>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+}
+else
+{
+    <p>No hay servicios para listar.</p>
+}
+
+
+
+@section scripts {
+
+    <script>
+
+        document.querySelector("#formBuscarServicios").addEventListener('submit', validarDatos);
+
+        function validarDatos(evento) {
+
+            evento.preventDefault();
+
+            let f1 = document.querySelector("#txtF1").value;
+            let f2 = document.querySelector("#txtF2").value;
+
+
+            if (!f1 || !f2) {
+                const notyf = new Notyf();
+                notyf.error({
+                    message: "Error, debe ingresar las 2 fechas para realizar la busqueda.",
+                    duration: 3500,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                })
+
+            } else {
+                this.submit();
+            }
+
         }
-    </tbody>
-</table>
+    </script>
 
-
+}

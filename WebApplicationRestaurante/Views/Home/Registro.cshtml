@@ -10,27 +10,27 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Registro">
+        <form asp-action="Registro" id="Registro">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" id="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" id="Password" type="password"class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-          
+
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+                <input asp-for="Nombre" id="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
+                <input asp-for="Apellido" id="Apellido" class="form-control" />
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,6 +40,54 @@
     </div>
 </div>
 
+
+<script>
+
+    document.querySelector("#Registro").addEventListener('submit', validarDatos);
+
+    function validarDatos(evento) {
+
+        evento.preventDefault();
+
+        let Email = document.querySelector("#Email").value;
+        let Password = document.querySelector("#Password").value;
+        let Nombre = document.querySelector('#Nombre').value;
+        let Apellido = document.querySelector('#Apellido').value;
+        
+            if (Email != '' && Password != '' && Nombre != '' && Apellido != '') {
+
+                this.submit();
+            } else {
+                const notyf = new Notyf();
+                notyf.error({
+                    message: "Error: Ingrese Datos Faltantes.",
+                    duration: 3500,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                })
+            }
+        
+       
+
+    }
+</script>
+
+@if (TempData["msg"] != null)
+{
+    <script type="text/javascript">
+    const notyf = new Notyf();
+    notyf.success({
+        message: "@TempData["msg"]",
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+    })
+    </script>
+}
 
 
 <div>

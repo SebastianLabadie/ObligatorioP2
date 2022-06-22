@@ -3,7 +3,37 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenido a Los Pollos Hermanos!</h1>
 </div>
 <p>@ViewBag.msg</p>
+
+
+@if (TempData["msg"] != null)
+{
+    <script type="text/javascript">
+    const notyf = new Notyf();
+    notyf.error({
+        message: "@TempData["msg"]",
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+    })
+    </script>
+}
+
+@if (TempData["Ok"] != null)
+{
+    <script type="text/javascript">
+    const notyf = new Notyf();
+    notyf.success({
+        message: "@TempData["Ok"]",
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+    })
+    </script>
+}

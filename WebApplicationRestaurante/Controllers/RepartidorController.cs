@@ -11,6 +11,23 @@ namespace WebApplicationRestaurante.Controllers
     public class RepartidorController : Controller
     {
         Sistema s = Sistema.GetInstancia();
+
+
+        public Boolean UsuarioAutorizado()
+        {
+            int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+
+            if (idLogueado != null && idLogueado != 0 && rol.Equals("Repartidor"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -22,17 +39,16 @@ namespace WebApplicationRestaurante.Controllers
         {
             List<Servicio> servicios = new List<Servicio>();
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-            string rol = HttpContext.Session.GetString("LogueadoRol");
 
-            if (idLogueado != null && idLogueado != 0 && rol.Equals("Repartidor"))
+            if (UsuarioAutorizado())
             {
                 servicios = s.GetServiciosByRepartidor((int)idLogueado);
 
             }
             else
             {
-                //redirect to login
-               
+                TempData["msg"] = "Acceso denegado, únicamente los repartidores pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
             }
 
             return View(servicios);

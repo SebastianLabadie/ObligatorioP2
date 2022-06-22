@@ -1,32 +1,41 @@
 ﻿@model Dominio.Servicio
 
 @{
-    ViewData["Title"] = "Platos";
+    ViewData["Title"] = $"Platos de Servicio #{Model.Id}";
 }
 
-<h1>Platos</h1>
-<label>Costo Final:</label>
-<label>@Model.CalcularCosto()</label>
+<h1>Platos de Servicio #@Model.Id</h1>
+
 
 @if (Model.Estado == "Abierto")
 {
-<form method="post">
-    <label>Plato</label>
-    <select name="platoId">
-        @foreach (var plato in ViewBag.platos)
-        {
-            <option value="@plato.Id"> @plato.Nombre $@plato.Precio </option>
-        }
-    </select>
+    <label>Costo Actual:</label>
+    <label>@Model.CalcularCosto()</label>
 
-    <label>Cantidad</label>
-    <input type="number" name="cantidad" />
+    <form method="post" id="formAlta">
+        <label>Plato</label>
+        <select name="platoId" id="slcPlato">
+            @foreach (var plato in ViewBag.platos)
+            {
+                <option value="@plato.Id"> @plato.Nombre $@plato.Precio </option>
+            }
+        </select>
 
-    <input class="d-none" type="number" name="servicioId" value="@Model.Id" />
+        <label>Cantidad</label>
+        <input type="number" name="cantidad" id="txtCantidad" />
 
-    <input type="submit" value="Confirmar" />
-</form>
+        <input class="d-none" type="number" name="servicioId" value="@Model.Id" />
+
+        <input type="submit" value="Confirmar" />
+    </form>
 }
+else
+{
+    <label>Precio Final:</label>
+    <label>@Model.PrecioFinal</label>
+}
+
+
 
 <table class="table">
     <thead>
@@ -35,35 +44,86 @@
                 Nombre
             </th>
             <th>
-               Precio
+                Precio
             </th>
             <th>
-               Cantidad
+                Cantidad
             </th>
-            
+
         </tr>
     </thead>
     <tbody>
 
-           
-              
 
-    @foreach (var item2 in Model.carrito)
-    {
-        <tr>
-            <td>
-                @item2.Plato.Nombre
 
-            </td>
-            <td>
-                @item2.Plato.Precio
-            </td>
-            <td>
-                @item2.Cantidad
-            </td>
 
-        </tr>
-    }
-                   
+        @foreach (var item2 in Model.carrito)
+        {
+            <tr>
+                <td>
+                    @item2.Plato.Nombre
+
+                </td>
+                <td>
+                    @item2.Plato.Precio
+                </td>
+                <td>
+                    @item2.Cantidad
+                </td>
+
+            </tr>
+        }
+
     </tbody>
 </table>
+
+
+
+@if (TempData["msg"] != null)
+{
+    <script type="text/javascript">
+        const notyf = new Notyf();
+        notyf.success({
+            message: "@TempData["msg"]",
+            duration: 3500,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+        })
+    </script>
+}
+
+
+@section scripts {
+
+    <script>
+
+        document.querySelector("#formAlta").addEventListener('submit', validarDatos);
+
+        function validarDatos(evento) {
+
+            evento.preventDefault();
+
+            let plato = parseInt(document.querySelector("#slcPlato").value);
+            let cantidad = parseInt(document.querySelector("#txtCantidad").value);
+
+
+            if (plato > 0 && cantidad > 0) {
+                this.submit();
+            } else {
+                const notyf = new Notyf();
+                notyf.error({
+                    message: "Error, cantidad debe ser mayor a 0 y asegurese de seleccionar un plato.",
+                    duration: 3500,
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                })
+            }
+
+        }
+    </script>
+
+}

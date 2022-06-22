@@ -39,9 +39,8 @@ namespace Dominio
             foreach (PlatoCantidad pc in carrito)
             {
                 costo += pc.Plato.Precio * pc.Cantidad;
-                costo += PrecioCubierto * CantComensales;
-
             }
+                costo += PrecioCubierto * CantComensales;
 
             return costo;
         }

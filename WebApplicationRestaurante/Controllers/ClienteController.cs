@@ -16,23 +16,37 @@ namespace WebApplicationRestaurante.Controllers
             return View();
         }
         
-
-        public IActionResult MisServicios()
-
+        public Boolean UsuarioAutorizado()
         {
-            List<Servicio> servicios = new List<Servicio>();
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
             string rol = HttpContext.Session.GetString("LogueadoRol");
 
             if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public IActionResult MisServicios()
+
+        {
+            int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+            List<Servicio> servicios = new List<Servicio>();
+           
+
+            if (UsuarioAutorizado())
             {
                 servicios = s.GetServicios((int)idLogueado);
 
             }
             else
             {
-                //redirect to login
-               
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
             }
 
             return View(servicios);
@@ -41,19 +55,23 @@ namespace WebApplicationRestaurante.Controllers
         [HttpPost]
         public IActionResult MisServicios(DateTime f1, DateTime f2)
         {
-            //List<Contenido> l = s.BuscarContenidoEntreFechas(f1, f2);
             List<Servicio> servicios = new List<Servicio>();
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-            string rol = HttpContext.Session.GetString("LogueadoRol");
+            
 
-            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            if (UsuarioAutorizado())
             {
-                servicios = s.GetServiciosByDate(f1,f2,(int)idLogueado);
+                if (f1 != null && f2 != null )
+                {
+                    servicios = s.GetServiciosByDate(f1, f2, (int)idLogueado);
+                }
+               
 
             }
             else
             {
-                //redirect to login
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
             }
 
             return View(servicios);
@@ -61,10 +79,19 @@ namespace WebApplicationRestaurante.Controllers
 
         public IActionResult Platos(int id)
         {
-            Servicio serv = s.GetServicioById(id);
-            List<Plato> platos = s.GetPlatos();
-            ViewBag.platos = platos;
 
+            Servicio serv = null;
+            if (UsuarioAutorizado())
+            {
+                List<Plato> platos = s.GetPlatos();
+                ViewBag.platos = platos;
+                serv = s.GetServicioById(id);
+            }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
 
             return View(serv);
         }
@@ -72,7 +99,17 @@ namespace WebApplicationRestaurante.Controllers
         [HttpPost]
         public IActionResult Platos(int platoId,int cantidad,int servicioId)
         {
-            s.AgregarPlatoById(platoId, cantidad, servicioId);
+            if (UsuarioAutorizado())
+            {
+                s.AgregarPlatoById(platoId, cantidad, servicioId);
+                TempData["msg"] = $"Plato agregado con éxito al servicio #{servicioId}";
+            }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+
 
             return RedirectToAction("Platos");
         }
@@ -81,10 +118,20 @@ namespace WebApplicationRestaurante.Controllers
         public IActionResult MisServiciosPorPlato()
 
         {
-            List<Plato> platos = s.GetPlatos();
-            ViewBag.platos = platos;
-
             List<Servicio> servicios = new List<Servicio>();
+            List<Plato> platos = s.GetPlatos();
+
+            if (UsuarioAutorizado())
+            {
+                ViewBag.platos = platos;
+
+            }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+
             
             return View(servicios);
         }
@@ -94,23 +141,20 @@ namespace WebApplicationRestaurante.Controllers
 
         {
             List<Plato> platos = s.GetPlatos();
-            ViewBag.platos = platos;
-
             List<Servicio> servicios = new List<Servicio>();
-
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-            string rol = HttpContext.Session.GetString("LogueadoRol");
 
-            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            if (UsuarioAutorizado())
             {
-                servicios = s.GetServiciosByPlato((int)idLogueado,pId);
-
+                ViewBag.platos = platos;
+                servicios = s.GetServiciosByPlato((int)idLogueado, pId);
             }
             else
             {
-                //redirect to login
-
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
             }
+
 
             return View(servicios);
         }
@@ -119,19 +163,38 @@ namespace WebApplicationRestaurante.Controllers
         public IActionResult Cerrar(int Id)
         {
             string msg = "";
-            if (Id > 0)
+
+            if (UsuarioAutorizado() )
             {
-               msg = s.SetServicioEstadoById(Id);
+                if (Id > 0)
+                {
+                    msg = s.SetServicioEstadoById(Id);
+                    TempData["msg"] = msg;
+                }
             }
-            ViewBag.msg = msg;
-            return RedirectToAction("MisServicios"); //View();
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            return RedirectToAction("MisServicios"); 
         }
 
 
         public IActionResult SolicitarServicio()
         {
-          
-            return  View();
+            if (UsuarioAutorizado())
+            {
+                return View();
+            }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+            
         }
 
         [HttpPost]
@@ -145,64 +208,120 @@ namespace WebApplicationRestaurante.Controllers
         {
             List<Servicio> ser = new List<Servicio>();
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-            string rol = HttpContext.Session.GetString("LogueadoRol");
-
-            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+           
+            if (UsuarioAutorizado())
             {
                 ser = s.GetServiciosMasCaros((int)idLogueado);
             }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(ser);
         }
 
         public IActionResult SolicitarServicioLocal()
         {
-
-            List<Mozo> mo = s.GetMozos();
-            ViewBag.mozos = mo;
-            return View();
+            if (UsuarioAutorizado())
+            {
+                List<Mozo> mo = s.GetMozos();
+                ViewBag.mozos = mo;
+                return View();
+            }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+           
         }
        
         [HttpPost]
         public IActionResult SolicitarServicioLocal(int NroMesa, int CantComensales, int mozoId)
         {
+           
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-            string rol = HttpContext.Session.GetString("LogueadoRol");
-
-            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            if (UsuarioAutorizado())
             {
                 Cliente cli = s.GetClienteById((int)idLogueado);
                 Mozo mo = s.GetMozoById(mozoId);
-                s.AltaLocal(DateTime.Now, NroMesa, CantComensales, mo, cli);
-            
+                Local l = s.AltaLocal(DateTime.Now, NroMesa, CantComensales, mo, cli);
+                if (l != null)
+                {
+                    TempData["msg"] = "Servicio Local creado correctamente";
+                    
+                }
+                else
+                {
+                    TempData["msg"] = "Error al crear Servicio Local";
+                }
+                return RedirectToAction("SolicitarServicioLocal");
+
             }
-            return RedirectToAction("SolicitarServicioLocal");
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+
+
+               
+            
+
+            
             
         }
 
         public IActionResult SolicitarServicioDelivery()
         {
-
-            List<Repartidor> re = s.GetRepartidores();
-            ViewBag.repartidores = re;
-            return View();
+            if (UsuarioAutorizado())
+            {
+                List<Repartidor> re = s.GetRepartidores();
+                ViewBag.repartidores = re;
+                return View();
+            }
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
+            
         }
 
         [HttpPost]
         public IActionResult SolicitarServicioDelivery(string DireccionEnvio,double DistanciaARestaurante,int repartidorId)
         {
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-            string rol = HttpContext.Session.GetString("LogueadoRol");
-
-            if (idLogueado != null && idLogueado != 0 && rol.Equals("Cliente"))
+            if (UsuarioAutorizado())
             {
                 Cliente cli = s.GetClienteById((int)idLogueado);
                 Repartidor re = s.GetRepartidorById(repartidorId);
-                s.AltaDelivery(DateTime.Now,DireccionEnvio,DistanciaARestaurante,re, cli);
-
+                Delivery del = s.AltaDelivery(DateTime.Now, DireccionEnvio, DistanciaARestaurante, re, cli);
+                if (del != null)
+                {
+                    TempData["msg"] = "Delivery Creado con exito.";
+                }
+                else
+                {
+                    TempData["msg"] = "Error al crear delivery";
+                }
+                
+                return RedirectToAction("SolicitarServicioDelivery");
             }
-            return RedirectToAction("SolicitarServicioDelivery");
+            else
+            {
+                TempData["msg"] = "Acceso denegado, únicamente los clientes pueden acceder a ese menú.";
+                return RedirectToAction("Index", "Home");
+            }
 
         }
+       
+            
+            
+
+        
 
 
 

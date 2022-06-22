@@ -19,7 +19,10 @@ namespace Dominio
         public override bool EsValido()
         {
             
-            if (Nombre != "" && Apellido != "" && Regex.IsMatch(Password, "[A-Z]+[a-z]+[0-9]") && Password.Length>=6 && Regex.IsMatch(Nombre, "[A-Z]|[a-z]") && Regex.IsMatch(Apellido, "[A-Z]|[a-z]") && Regex.IsMatch(Email, "[@]") && Email.Substring(0,1)!="@" && Email.Substring(Email.Length-1)!="@")
+            if (Nombre != "" && Apellido != "" && Regex.IsMatch(Password, "[A-Z]+[a-z]+[0-9]") 
+                && Password.Length>=6 && Regex.IsMatch(Nombre, "[A-Z]|[a-z]") 
+                && Regex.IsMatch(Apellido, "[A-Z]|[a-z]") 
+                && Regex.IsMatch(Email, "[@]"))
             {
                 return true;
 

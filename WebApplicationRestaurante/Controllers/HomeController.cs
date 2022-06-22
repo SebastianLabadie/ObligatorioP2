@@ -22,6 +22,7 @@ namespace WebApplicationRestaurante.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
             int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
@@ -60,12 +61,13 @@ namespace WebApplicationRestaurante.Controllers
             {
                 HttpContext.Session.SetInt32("LogueadoId", p.Id);
                 HttpContext.Session.SetString("LogueadoRol", p.GetType().Name);
+                TempData["Ok"] = "Logueado Correctamente";
                 return RedirectToAction("Index");
             }
             else
             {
 
-                ViewBag.msg = "Datos incorrectos";
+                TempData["msg"] = "Datos Incorrectos.";
 
                 return View();
             }
@@ -82,11 +84,11 @@ namespace WebApplicationRestaurante.Controllers
         {
             if (s.AltaCliente(Email, Password, Nombre, Apellido) != null)
             {
-                ViewBag.msg = "Registro exitoso!";
+                TempData["msg"] = "Usuario Creado Correcamente";
             }
             else
             {
-                ViewBag.msg = "Registro fallido valide sus datos.";
+                TempData["msg"] = "Error Usuario no fue creado correctamente";
             }
             return View();
         }
@@ -94,6 +96,7 @@ namespace WebApplicationRestaurante.Controllers
         public IActionResult LogOut()
         {
             HttpContext.Session.Clear();
+            TempData["Ok"] = "Sesion Cerrada.";
             return  RedirectToAction("Index");
         }
 
